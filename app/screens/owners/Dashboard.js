@@ -1,11 +1,20 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import SafeScreen from "../../components/SafeScreen";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
+import MetricButton from "../../components/MetricButton";
 
 function Dashboard(props) {
+  const [isPressed, setIsPressed] = useState([false, false, false]);
+
+  const handlePress = (index) => {
+    const updatedPressedStates = [...isPressed];
+    updatedPressedStates[index] = !updatedPressedStates[index]; // Toggle the state
+    setIsPressed(updatedPressedStates);
+  };
+
   const chartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
@@ -21,18 +30,24 @@ function Dashboard(props) {
     <SafeScreen style={styles.container}>
       <AppText style={styles.heading}>Owner Dashboard</AppText>
       <View style={styles.metricContainer}>
-        <View style={styles.metric}>
-          <AppText style={styles.metricValue}>2</AppText>
-          <Text style={styles.metricLabel}>Clusters</Text>
-        </View>
-        <View style={styles.metric}>
-          <AppText style={styles.metricValue}>1200</AppText>
-          <AppText style={styles.metricLabel}>Rides</AppText>
-        </View>
-        <View style={styles.metric}>
-          <AppText style={styles.metricValue}>89%</AppText>
-          <AppText style={styles.metricLabel}>Success</AppText>
-        </View>
+        <MetricButton
+          label="Clusters"
+          value="2"
+          isPressed={isPressed[0]}
+          onPress={() => handlePress(0)}
+        />
+        <MetricButton
+          label="Rides"
+          value="1250"
+          isPressed={isPressed[1]}
+          onPress={() => handlePress(1)}
+        />
+        <MetricButton
+          label="Success"
+          value="88%"
+          isPressed={isPressed[2]}
+          onPress={() => handlePress(2)}
+        />
       </View>
       <AppText style={styles.chartTitle}>Rides Over Time</AppText>
       <LineChart
@@ -44,7 +59,7 @@ function Dashboard(props) {
           backgroundGradientFrom: colors.white,
           backgroundGradientTo: colors.white,
           decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(252, 92, 101, ${opacity})`,
+          color: colors.primary_op,
           labelColor: () => colors.black,
         }}
         bezier
@@ -60,34 +75,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.light,
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  metricContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  metric: {
-    backgroundColor: colors.white,
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    elevation: 2,
-    width: 120,
-    height: 100,
-  },
-  metricValue: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  metricLabel: {
-    fontSize: 16,
-    marginTop: 5,
-    textAlign: "center",
-  },
   chartTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -97,6 +84,16 @@ const styles = StyleSheet.create({
   chart: {
     marginVertical: 8,
     borderRadius: 16,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  metricContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
 });
 

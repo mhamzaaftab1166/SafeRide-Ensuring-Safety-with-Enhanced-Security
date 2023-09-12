@@ -1,5 +1,6 @@
 export default {
   primary: "#fc5c65",
+  primary_op: (opacity = 1) => `rgba(252, 92, 101, ${opacity})`,
   secondary: "#4ecdc4",
   black: "#000",
   white: "#fff",
