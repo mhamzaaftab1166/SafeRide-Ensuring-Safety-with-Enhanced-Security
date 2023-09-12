@@ -1,9 +1,15 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import Dashboard from "./app/screens/owners/Dashboard";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+
+import AdminNavigator from "./app/navigation/AdminNavigator";
 
 function App(props) {
-  return <Dashboard />;
+  return (
+    <NavigationContainer>
+      <AdminNavigator />
+    </NavigationContainer>
+  );
 }
 const styles = StyleSheet.create({
   container: {},

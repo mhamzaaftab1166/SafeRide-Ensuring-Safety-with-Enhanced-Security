@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+
 import SafeScreen from "../../components/SafeScreen";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
 import MetricButton from "../../components/MetricButton";
 
-function Dashboard(props) {
+function Dashboard({ navigation }) {
   const [isPressed, setIsPressed] = useState([false, false, false]);
 
   const handlePress = (index) => {
     const updatedPressedStates = [...isPressed];
-    updatedPressedStates[index] = !updatedPressedStates[index]; // Toggle the state
+    updatedPressedStates[index] = !updatedPressedStates[index];
     setIsPressed(updatedPressedStates);
+    if (index === 0) {
+      navigation.navigate("Clusters");
+    }
   };
 
   const chartData = {
