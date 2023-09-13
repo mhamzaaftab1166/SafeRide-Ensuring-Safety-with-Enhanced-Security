@@ -1,27 +1,42 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import ClustersScreen from "../screens/owners/ClustersScreen";
-import Dashboard from "../screens/owners/Dashboard";
+import DashboardNavigator from "./DashboardNavigator";
+import AccountScreen from "../screens/owners/AccountScreen";
 
-const Stack = createStackNavigator();
-
+const Tab = createBottomTabNavigator();
 const AdminNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleAlign: "center",
+    <Tab.Navigator
+      tabBarOptions={{
+        style: {
+          bottom: 3,
+        },
       }}
     >
-      <Stack.Screen
+      <Tab.Screen
         options={{
-          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            <MaterialCommunityIcons
+              name="view-dashboard"
+              color={color}
+              size={size}
+            />
+          ),
         }}
         name="Dashboard"
-        component={Dashboard}
+        component={DashboardNavigator}
       />
-      <Stack.Screen name="Clusters" component={ClustersScreen} />
-    </Stack.Navigator>
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}
+        name="Account"
+        component={AccountScreen}
+      />
+    </Tab.Navigator>
   );
 };
-
 export default AdminNavigator;

@@ -1,24 +1,14 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import { LineChart } from "react-native-chart-kit";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 
 import SafeScreen from "../../components/SafeScreen";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
-import MetricButton from "../../components/MetricButton";
+import MetricButton from "../../components/statistics/MetricButton";
+import AppLineChart from "../../components/statistics/AppLineChart";
+import SuccessFailureRate from "../../components/statistics/SuccessFailure";
 
 function Dashboard({ navigation }) {
-  const [isPressed, setIsPressed] = useState([false, false, false]);
-
-  const handlePress = (index) => {
-    const updatedPressedStates = [...isPressed];
-    updatedPressedStates[index] = !updatedPressedStates[index];
-    setIsPressed(updatedPressedStates);
-    if (index === 0) {
-      navigation.navigate("Clusters");
-    }
-  };
-
   const chartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
@@ -37,38 +27,38 @@ function Dashboard({ navigation }) {
         <MetricButton
           label="Clusters"
           value="2"
-          isPressed={isPressed[0]}
-          onPress={() => handlePress(0)}
+          onPress={() => navigation.navigate("Clusters")}
         />
         <MetricButton
-          label="Rides"
-          value="1250"
-          isPressed={isPressed[1]}
-          onPress={() => handlePress(1)}
+          label="Riders"
+          value="8"
+          // onPress={() => handlePress(1)}
         />
+        <MetricButton
+          label="Vehicles"
+          value="8"
+          // onPress={() => handlePress(2)}
+        />
+      </View>
+      <View style={styles.metricContainer}>
         <MetricButton
           label="Success"
           value="88%"
-          isPressed={isPressed[2]}
-          onPress={() => handlePress(2)}
+          // onPress={() => handlePress(2)}
+        />
+        <MetricButton
+          label="Rides"
+          value="1254"
+          // onPress={() => handlePress(2)}
         />
       </View>
-      <AppText style={styles.chartTitle}>Rides Over Time</AppText>
-      <LineChart
-        data={chartData}
-        width={Dimensions.get("window").width - 20}
-        height={220}
-        chartConfig={{
-          backgroundColor: colors.white,
-          backgroundGradientFrom: colors.white,
-          backgroundGradientTo: colors.white,
-          decimalPlaces: 0,
-          color: colors.primary_op,
-          labelColor: () => colors.black,
-        }}
-        bezier
-        style={styles.chart}
+      <SuccessFailureRate
+        style={{ marginVertical: 30 }}
+        successRate={60}
+        failureRate={40}
       />
+      <AppText style={styles.chartTitle}>Rides Over Time</AppText>
+      <AppLineChart chartData={chartData} />
     </SafeScreen>
   );
 }
@@ -84,10 +74,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 10,
-  },
-  chart: {
-    marginVertical: 8,
-    borderRadius: 16,
   },
   heading: {
     fontSize: 24,
