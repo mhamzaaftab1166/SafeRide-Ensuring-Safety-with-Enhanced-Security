@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
+import { useFormikContext } from "formik";
 
 import AppForm from "..//../components/forms/AppForm";
 import AppFormField from "..//../components/forms/AppFormField";
@@ -13,12 +14,18 @@ const validationSchema = Yup.object({
   contact: Yup.string().required().min(11).label("Phone no"),
 });
 
-const RidersEditScreen = () => {
+const RidersEditScreen = ({ route }) => {
+  console.log(route.params);
+  const values = {
+    email: route.params.id !== "new" ? route.params.email : "",
+    name: route.params.id !== "new" ? route.params.name : "",
+    contact: "",
+  };
   return (
     <SafeScreen>
       <Image style={styles.logo} source={require("../../assets/icon.png")} />
       <AppForm
-        initialValues={{ email: "", name: "", contact: "" }}
+        initialValues={values}
         onSubmit={(data) => console.log(data)}
         validationSchema={validationSchema}
       >
