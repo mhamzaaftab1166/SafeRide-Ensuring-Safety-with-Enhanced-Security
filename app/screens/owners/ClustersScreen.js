@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: colors.white,
+    backgroundColor: colors.light,
   },
   clusterItem: {
     width: "47%",

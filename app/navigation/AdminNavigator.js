@@ -3,6 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import DashboardNavigator from "./DashboardNavigator";
 import AccountScreen from "../screens/owners/AccountScreen";
+import AccountNavigator from "./AccountNavigator";
 
 const Tab = createBottomTabNavigator();
 const AdminNavigator = () => {
@@ -34,7 +35,7 @@ const AdminNavigator = () => {
           ),
         }}
         name="Account"
-        component={AccountScreen}
+        component={AccountNavigator}
       />
     </Tab.Navigator>
   );
