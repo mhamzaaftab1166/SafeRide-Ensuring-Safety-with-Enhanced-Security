@@ -5,6 +5,7 @@ import { FlatList } from "react-native";
 import ListItem from "../../components/ListItem";
 import ListItemSeprator from "../../components/ListItemSeprator";
 import ListItemDeleteAction from "../../components/ListItemDeleteAction";
+import AddButton from "../../components/AddButton";
 
 const ridersData = [
   {
@@ -31,9 +32,45 @@ const ridersData = [
     email: "abc@gmail.com",
     profilePic: require("../../assets/hamza.jpeg"),
   },
+  {
+    id: 5,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 6,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 7,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 8,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 9,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 10,
+    name: "Asadullah",
+    email: "abc@gmail.com",
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
 ];
 
-const RiderScreen = () => {
+const RiderScreen = ({ navigation }) => {
   const [riders, setRiders] = useState(ridersData);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -51,7 +88,7 @@ const RiderScreen = () => {
             title={item.name}
             subTitle={item.email}
             image={item.profilePic}
-            onPress={() => console.log("rider tap", item)}
+            onPress={() => navigation.navigate("RiderEdit", item)}
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
@@ -69,6 +106,9 @@ const RiderScreen = () => {
           ])
         }
         ItemSeparatorComponent={ListItemSeprator}
+      />
+      <AddButton
+        onPress={() => navigation.navigate("RiderEdit", { id: "new" })}
       />
     </>
   );
