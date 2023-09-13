@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import ClustersScreen from "../screens/owners/ClustersScreen";
 import Dashboard from "../screens/owners/Dashboard";
+import RiderScreen from "../screens/owners/RiderScreen";
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const DashboardNavigator = () => {
         component={Dashboard}
       />
       <Stack.Screen name="Clusters" component={ClustersScreen} />
+      <Stack.Screen name="Riders" component={RiderScreen} />
     </Stack.Navigator>
   );
 };
