@@ -23,7 +23,13 @@ const DashboardNavigator = () => {
       />
       <Stack.Screen name="Clusters" component={ClustersScreen} />
       <Stack.Screen name="Riders" component={RiderScreen} />
-      <Stack.Screen name="RiderEdit" component={RidersEditScreen} />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="RiderEdit"
+        component={RidersEditScreen}
+      />
     </Stack.Navigator>
   );
 };
