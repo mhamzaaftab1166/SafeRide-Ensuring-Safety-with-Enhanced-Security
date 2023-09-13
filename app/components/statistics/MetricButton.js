@@ -2,9 +2,9 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import AppText from "../AppText";
 import colors from "../../config/colors";
 
-function MetricButton({ label, value, onPress }) {
+function MetricButton({ label, value, onPress, style }) {
   return (
-    <TouchableOpacity style={styles.metric} onPress={onPress}>
+    <TouchableOpacity style={[styles.metric, style]} onPress={onPress}>
       <AppText style={styles.metricValue}>{value}</AppText>
       <AppText style={styles.metricLabel}>{label}</AppText>
     </TouchableOpacity>
