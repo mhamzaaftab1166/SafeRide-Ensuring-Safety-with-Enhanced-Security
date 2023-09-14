@@ -17,6 +17,7 @@ function AppFormPicker({
   return (
     <>
       <AppPicker
+        icon={"format-list-bulleted-type"}
         width={width}
         items={items}
         placeholder={placeholder}

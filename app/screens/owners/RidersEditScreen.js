@@ -1,9 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import { Image, StyleSheet } from "react-native";
+import React from "react";
 import * as Yup from "yup";
-import { useFormikContext } from "formik";
 
 import AppForm from "..//../components/forms/AppForm";
+import AppFormPicker from "../../components/forms/AppFormPicker";
 import AppFormField from "..//../components/forms/AppFormField";
 import SubmitButton from "../../components/forms/SubmitButton";
 import SafeScreen from "../../components/SafeScreen";
@@ -11,6 +11,7 @@ import SafeScreen from "../../components/SafeScreen";
 const validationSchema = Yup.object({
   email: Yup.string().required().email().label("Email"),
   name: Yup.string().required().max(40).label("Name"),
+  category: Yup.object().nullable().required().label("Category"),
   contact: Yup.string().required().min(11).label("Phone no"),
 });
 
@@ -19,6 +20,7 @@ const RidersEditScreen = ({ route }) => {
   const values = {
     email: route.params.id !== "new" ? route.params.email : "",
     name: route.params.id !== "new" ? route.params.name : "",
+    category: null,
     contact: "",
   };
   return (
@@ -45,6 +47,16 @@ const RidersEditScreen = ({ route }) => {
           icon={"account-box"}
           placeholder="Rider Name"
           textContentType="name"
+        />
+        <AppFormPicker
+          items={[
+            { label: "Car", value: 1 },
+            { label: "Bike", value: 2 },
+            { label: "Rickshaw", value: 3 },
+          ]}
+          name={"category"}
+          placeholder={"Category"}
+          width={"50%"}
         />
         <AppFormField
           keyboardType={"numeric"}
