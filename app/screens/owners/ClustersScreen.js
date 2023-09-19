@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
+import AddButton from "../../components/AddButton";
 
 const dummyClusters = [
   {
@@ -40,7 +41,7 @@ function ClustersScreen({ navigation }) {
           <TouchableOpacity
             style={styles.clusterItem}
             // onPress={() =>
-            //   navigation.navigate("ClusterDetails", { clusterData: item })
+            //   navigation.navigate("ClusterDetails", { item })
             // }
           >
             <View style={styles.clusterBox}>
@@ -59,6 +60,9 @@ function ClustersScreen({ navigation }) {
             </View>
           </TouchableOpacity>
         )}
+      />
+      <AddButton
+      // onPress={() => navigation.navigate("RiderEdit", { id: "new" })}
       />
     </View>
   );

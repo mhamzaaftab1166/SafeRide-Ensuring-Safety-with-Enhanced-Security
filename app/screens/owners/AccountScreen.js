@@ -31,6 +31,7 @@ function AccountScreen({ navigation }) {
       <View style={styles.screen}>
         <View style={[styles.container, { marginVertical: 0 }]}>
           <ListItem
+            onPress={() => navigation.navigate("Profile")}
             title={"hamza"}
             subTitle={"hamza@gmail.com"}
             image={require("../../assets/hamza.jpeg")}
