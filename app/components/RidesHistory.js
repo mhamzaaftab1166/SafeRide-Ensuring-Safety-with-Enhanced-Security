@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 
 import colors from "../config/colors";
 import AppText from "./AppText";
 
 const RidesHistory = ({ item }) => {
-  const passengersText = item.passengers.join(", "); // Join passenger names with a comma
+  const passengersText = item.passengers.join(", ");
 
   return (
     <View style={styles.rideItem}>
-      <AppText style={styles.rideTitle}>Ride ID: {item.id}</AppText>
+      <AppText style={styles.rideTitle}>Cluster: {item.cluster}</AppText>
+      <AppText style={styles.text}>Ride id: {item.id}</AppText>
       <AppText style={styles.text}>Driver: {item.driver}</AppText>
       <AppText style={styles.text}>Passengers: {passengersText}</AppText>
       <AppText style={styles.text}>Time: {item.time}</AppText>

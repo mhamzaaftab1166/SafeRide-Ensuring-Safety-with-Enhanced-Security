@@ -16,7 +16,6 @@ const validationSchema = Yup.object({
 });
 
 const RidersEditScreen = ({ route }) => {
-  console.log(route.params);
   const values = {
     email: route.params.id !== "new" ? route.params.email : "",
     name: route.params.id !== "new" ? route.params.name : "",

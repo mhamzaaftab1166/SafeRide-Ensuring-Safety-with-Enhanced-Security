@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, TextInput } from "react-native";
+import { View, FlatList, StyleSheet, TextInput } from "react-native";
 
 import RidesHistory from "../../components/RidesHistory";
 import AppText from "../../components/AppText";
@@ -10,56 +10,55 @@ const dummyRideHistory = [
     id: "1",
     driver: "John Doe",
     time: "2023-09-25 09:30 AM",
-    category: "Rickshaw",
+    cluster: "Rickshaw Cluster",
     passengers: ["Alice", "Bob", "Charlie", "David"],
   },
   {
     id: "2",
     driver: "Jane Smith",
     time: "2023-09-24 02:15 PM",
-    category: "Bike",
+    cluster: "Bike Cluster",
     passengers: ["Ella"],
   },
   {
     id: "3",
     driver: "Ella Johnson",
     time: "2023-09-23 11:45 AM",
-    category: "Rickshaw",
+    cluster: "Rickshaw Cluster",
     passengers: ["Frank", "Grace", "Henry", "Isabella"],
   },
   {
     id: "4",
     driver: "David Lee",
     time: "2023-09-22 04:20 PM",
-    category: "Car",
+    cluster: "Car Cluster",
     passengers: ["James", "Kate", "Liam", "Mia"],
   },
   {
     id: "5",
     driver: "Olivia Wilson",
     time: "2023-09-21 07:55 AM",
-    category: "Rickshaw",
+    cluster: "Rickshaw Cluster",
     passengers: ["Noah", "Olivia", "Sophia", "Thomas"],
   },
   {
     id: "6",
     driver: "Sophia Anderson",
     time: "2023-09-20 01:30 PM",
-    category: "Bike",
+    cluster: "Bike Cluster",
     passengers: ["William"],
   },
   {
     id: "7",
     driver: "Lucas Harris",
     time: "2023-09-19 06:10 AM",
-    category: "Car",
+    cluster: "Car Cluster",
     passengers: ["Zoe", "Aaron", "Bella", "Caleb"],
   },
 ];
 
 function RidesScreen() {
   const [searchTerm, setSearchTerm] = useState("");
-
   const [filteredRideHistory, setFilteredRideHistory] = useState([]);
   const [totalResults, setTotalResults] = useState(0);
 
