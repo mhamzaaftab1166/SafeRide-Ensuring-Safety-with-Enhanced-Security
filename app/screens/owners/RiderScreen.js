@@ -6,6 +6,7 @@ import ListItem from "../../components/ListItem";
 import ListItemSeprator from "../../components/ListItemSeprator";
 import ListItemDeleteAction from "../../components/ListItemDeleteAction";
 import AddButton from "../../components/AddButton";
+import colors from "../../config/colors";
 
 const ridersData = [
   {
@@ -84,15 +85,17 @@ const RiderScreen = ({ navigation }) => {
         data={riders}
         keyExtractor={(rider) => rider.id.toString()}
         renderItem={({ item }) => (
-          <ListItem
-            title={item.name}
-            subTitle={item.email}
-            image={item.profilePic}
-            onPress={() => navigation.navigate("RiderEdit", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
-          ></ListItem>
+          <View style={styles.container}>
+            <ListItem
+              title={item.name}
+              subTitle={item.email}
+              image={item.profilePic}
+              onPress={() => navigation.navigate("RiderEdit", item)}
+              renderRightActions={() => (
+                <ListItemDeleteAction onPress={() => handleDelete(item)} />
+              )}
+            ></ListItem>
+          </View>
         )}
         refreshing={refreshing}
         onRefresh={() =>
@@ -116,4 +119,8 @@ const RiderScreen = ({ navigation }) => {
 
 export default RiderScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.light,
+  },
+});

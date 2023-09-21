@@ -49,7 +49,7 @@ function Dashboard({ navigation }) {
         <MetricButton
           label="Rides"
           value="1254"
-          // onPress={() => handlePress(2)}
+          onPress={() => navigation.navigate("Rides")}
         />
       </View>
       <SuccessFailureRate
