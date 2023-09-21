@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { View, FlatList, StyleSheet, TextInput } from "react-native";
+import React, { useState } from "react";
+import { View, FlatList, StyleSheet, TextInput, Text } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
 
 import RidesHistory from "../../components/RidesHistory";
 import AppText from "../../components/AppText";
@@ -56,13 +57,50 @@ const dummyRideHistory = [
     passengers: ["Zoe", "Aaron", "Bella", "Caleb"],
   },
 ];
+
 function RidesScreen() {
   const [searchTerm, setSearchTerm] = useState("");
   const [totalResults, setTotalResults] = useState(dummyRideHistory.length);
+  const [selected, setSelected] = React.useState("");
+
+  const data = [
+    { key: "2", value: "Rickshaw Cluster" },
+    { key: "3", value: "Bike Cluster" },
+    { key: "5", value: "Car Cluster" },
+  ];
+  const duration = [
+    { key: "2", value: "Today" },
+    { key: "3", value: "Last Week" },
+    { key: "5", value: "Last 6 Month" },
+  ];
 
   return (
     <View style={styles.container}>
       <AppText style={styles.heading}>Ride History</AppText>
+      <View style={styles.dropDown}>
+        <View style={styles.clusterDropdow}>
+          <SelectList
+            setSelected={(val) => setSelected(val)}
+            data={data}
+            save="key"
+            placeholder="Select by Cluster"
+            dropdownStyles={styles.dropdownStyles}
+            boxStyles={styles.boxStyles}
+            inputStyles={{ color: colors.white }}
+          />
+        </View>
+        <View style={styles.clusterDropdow}>
+          <SelectList
+            setSelected={(val) => setSelected(val)}
+            data={duration}
+            save="key"
+            placeholder="Filter by: Duration"
+            dropdownStyles={styles.dropdownStyles}
+            boxStyles={styles.boxStyles}
+            inputStyles={{ color: colors.white }}
+          />
+        </View>
+      </View>
       <TextInput
         style={styles.searchInput}
         placeholder="Search by driver or passenger"
@@ -102,6 +140,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 16,
     borderRadius: 16,
+  },
+  dropDown: {
+    marginVertical: 10,
+    flexDirection: "row",
+  },
+  clusterDropdow: {
+    width: "50%",
+    borderRadius: 12,
+    marginHorizontal: 1,
+  },
+  dropdownStyles: {
+    backgroundColor: colors.light,
+    borderColor: colors.medium,
+    borderWidth: 2,
+  },
+  boxStyles: {
+    backgroundColor: colors.primary,
+    color: colors.light,
   },
 });
 
