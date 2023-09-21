@@ -1,14 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+
 import colors from "../config/colors";
+import AppText from "./AppText";
 
 const RidesHistory = ({ item }) => {
+  const passengersText = item.passengers.join(", "); // Join passenger names with a comma
+
   return (
     <View style={styles.rideItem}>
-      <Text style={styles.rideTitle}>Ride ID: {item.id}</Text>
-      <Text>Driver: {item.driver}</Text>
-      <Text>Passenger: {item.passenger}</Text>
-      <Text>Time: {item.time}</Text>
+      <AppText style={styles.rideTitle}>Ride ID: {item.id}</AppText>
+      <AppText style={styles.text}>Driver: {item.driver}</AppText>
+      <AppText style={styles.text}>Passengers: {passengersText}</AppText>
+      <AppText style={styles.text}>Time: {item.time}</AppText>
     </View>
   );
 };
@@ -25,7 +29,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   rideTitle: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
+  },
+  text: {
+    fontSize: 14,
   },
 });
