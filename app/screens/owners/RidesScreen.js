@@ -56,31 +56,9 @@ const dummyRideHistory = [
     passengers: ["Zoe", "Aaron", "Bella", "Caleb"],
   },
 ];
-
 function RidesScreen() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredRideHistory, setFilteredRideHistory] = useState([]);
-  const [totalResults, setTotalResults] = useState(0);
-
-  const filterRides = () => {
-    const filteredData = dummyRideHistory.filter((item) => {
-      const lowerCaseSearchTerm = searchTerm.toLowerCase();
-      const driverIncludes = item.driver
-        .toLowerCase()
-        .includes(lowerCaseSearchTerm);
-      const passengersInclude = item.passengers.some((passenger) =>
-        passenger.toLowerCase().includes(lowerCaseSearchTerm)
-      );
-      return driverIncludes || passengersInclude;
-    });
-
-    setTotalResults(filteredData.length);
-    setFilteredRideHistory(filteredData);
-  };
-
-  useEffect(() => {
-    filterRides();
-  }, [searchTerm]);
+  const [totalResults, setTotalResults] = useState(dummyRideHistory.length);
 
   return (
     <View style={styles.container}>
@@ -97,7 +75,7 @@ function RidesScreen() {
         <AppText>Total results: {totalResults}</AppText>
       )}
       <FlatList
-        data={filteredRideHistory}
+        data={dummyRideHistory}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <RidesHistory item={item} />}
       />
@@ -109,6 +87,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: colors.white,
   },
   heading: {
     fontSize: 24,
