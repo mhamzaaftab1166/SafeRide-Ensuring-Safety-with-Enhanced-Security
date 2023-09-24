@@ -37,7 +37,7 @@ function Dashboard({ navigation }) {
         <MetricButton
           label="Vehicles"
           value="8"
-          // onPress={() => handlePress(2)}
+          onPress={() => navigation.navigate("Vehicles")}
         />
       </View>
       <View style={styles.metricContainer}>

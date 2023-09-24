@@ -6,6 +6,7 @@ import RiderScreen from "../screens/owners/RiderScreen";
 import RidersEditScreen from "../screens/owners/RidersEditScreen";
 import SuccessScreen from "../screens/owners/SuccessScreen";
 import RidesScreen from "../screens/owners/RidesScreen";
+import VehicleScreen from "../screens/owners/VehiclesScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const DashboardNavigator = () => {
       <Stack.Screen name="Clusters" component={ClustersScreen} />
       <Stack.Screen name="Riders" component={RiderScreen} />
       <Stack.Screen name="Rides" component={RidesScreen} />
+      <Stack.Screen name="Vehicles" component={VehicleScreen} />
       <Stack.Screen
         options={{ title: "Success Rate" }}
         name="Success"
