@@ -83,7 +83,7 @@ function RidesScreen() {
             setSelected={(val) => setSelected(val)}
             data={data}
             save="key"
-            placeholder="Select by Cluster"
+            placeholder="Filter by: Cluster"
             dropdownStyles={styles.dropdownStyles}
             boxStyles={styles.boxStyles}
             inputStyles={{ color: colors.white }}

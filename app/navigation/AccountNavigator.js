@@ -1,9 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
+const Stack = createStackNavigator();
 import React from "react";
+
 import AccountScreen from "../screens/owners/AccountScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import ProfileScreen from "../screens/owners/ProfileScreen";
-const Stack = createStackNavigator();
+import RiderStatusScreen from "../screens/owners/RiderStatusScreen";
 
 const AccountNavigator = () => {
   return (
@@ -14,6 +16,7 @@ const AccountNavigator = () => {
     >
       <Stack.Screen name="Account" component={AccountScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Status" component={RiderStatusScreen} />
       <Stack.Screen
         options={{ title: "Reports" }}
         name="Messages"

@@ -3,6 +3,7 @@ export default {
   primary_op: (opacity = 1) => `rgba(252, 92, 101, ${opacity})`,
   secondary: "#4ecdc4",
   black: "#000",
+  warning: "#ffe66d",
   white: "#fff",
   medium: "#6e6969",
   light: "#f8f4f4",

@@ -67,7 +67,7 @@ function VehicleScreen() {
             setSelected={(val) => setSelected(val)}
             data={data}
             save="key"
-            placeholder="Select by Category"
+            placeholder="Filter by: Category"
             dropdownStyles={styles.dropdownStyles}
             boxStyles={styles.boxStyles}
             inputStyles={{ color: colors.white }}

@@ -9,12 +9,12 @@ import ListItemSeprator from "../../components/ListItemSeprator";
 
 const menuItems = [
   {
-    title: "Additional",
+    title: "Rider Status",
     icon: {
-      name: "format-list-bulleted",
+      name: "check-circle",
       backgroundColor: colors.primary,
     },
-    targetScreen: "",
+    targetScreen: "Status",
   },
   {
     title: "Reports",
@@ -59,7 +59,9 @@ function AccountScreen({ navigation }) {
         <ListItem
           // onPress={}
           title={"Log Out"}
-          IconComponent={<Icon name="logout" backgroundColor="#ffe66d"></Icon>}
+          IconComponent={
+            <Icon name="logout" backgroundColor={colors.warning}></Icon>
+          }
         ></ListItem>
       </View>
     </GestureHandlerRootView>
