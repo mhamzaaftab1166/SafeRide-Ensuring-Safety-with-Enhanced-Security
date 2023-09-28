@@ -1,22 +1,30 @@
 import React from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
 import AddButton from "../../components/AddButton";
 
+const window = Dimensions.get("window");
+
 const dummyClusters = [
   {
     id: "1",
-    name: "Rikshaw Cluster",
+    name: "Rickshaw Cluster",
     location: "Faisalabad",
     numOfVehicles: 2,
     title: "rickshaw",
   },
   {
     id: "2",
-    name: "Rikshaw Cluster",
+    name: "Rickshaw Cluster",
     location: "Lahore",
     numOfVehicles: 5,
     title: "rickshaw",
@@ -38,12 +46,7 @@ function ClustersScreen({ navigation }) {
         data={dummyClusters}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.clusterItem}
-            // onPress={() =>
-            //   navigation.navigate("ClusterDetails", { item })
-            // }
-          >
+          <TouchableOpacity style={styles.clusterItem}>
             <View style={styles.clusterBox}>
               <AppText style={styles.clusterName}>{item.name}</AppText>
               <AppText style={styles.clusterLocation}>{item.location}</AppText>
@@ -54,16 +57,14 @@ function ClustersScreen({ navigation }) {
               <MaterialCommunityIcons
                 style={styles.icon}
                 name={item.title}
-                size={35}
+                size={window.width * 0.15}
                 color={colors.white}
               />
             </View>
           </TouchableOpacity>
         )}
       />
-      <AddButton
-      // onPress={() => navigation.navigate("RiderEdit", { id: "new" })}
-      />
+      <AddButton />
     </View>
   );
 }
@@ -75,28 +76,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
   },
   clusterItem: {
-    width: "47%",
+    width: window.width / 2 - 15,
     margin: 5,
   },
   clusterBox: {
     backgroundColor: colors.primary,
     padding: 15,
     borderRadius: 10,
-    height: 150,
+    flex: 1,
+    justifyContent: "space-between",
   },
   clusterName: {
     fontSize: 18,
     fontWeight: "bold",
     color: colors.white,
-    marginBottom: 8,
   },
   clusterLocation: {
     fontSize: 16,
     color: colors.white,
   },
   icon: {
-    top: 10,
-    left: 105,
+    alignSelf: "flex-end",
   },
 });
 

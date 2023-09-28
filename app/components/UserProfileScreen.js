@@ -47,7 +47,7 @@ function UserProfileScreen({ user, onEditProfile }) {
               color={colors.white}
             />
           }
-          style={{ width: 190, height: 55 }}
+          style={{ width: "60%", height: 55 }}
           title={"Edit Profile"}
           onPress={onEditProfile}
         />
