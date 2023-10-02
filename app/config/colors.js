@@ -4,6 +4,8 @@ export default {
   secondary: "#4ecdc4",
   black: "#000",
   warning: "#ffe66d",
+  yellow: "#fef3c7",
+  purple: "#a7abfa",
   white: "#fff",
   medium: "#6e6969",
   light: "#f8f4f4",
