@@ -70,15 +70,23 @@ const OnboardingScreen = () => {
         "Unlock the Power of Geo-Fencing and Discover Many Other Helpful Features",
     },
   ];
-
   return (
     <SafeScreen style={styles.container}>
-      <Onboarding containerStyles={{ paddingHorizontal: 15 }} pages={data} />
+      <Onboarding
+        bottomBarHighlight={false}
+        // onDone={handleDone}
+        // onSkip={handleSkip}
+        containerStyles={{ paddingHorizontal: 15 }}
+        pages={data}
+        DoneButtonComponent={({ isLight, ...props }) => (
+          <View style={styles.doneButton}>
+            <Text style={styles.text}>Get Started</Text>
+          </View>
+        )}
+      />
     </SafeScreen>
   );
 };
-
-export default OnboardingScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,4 +98,19 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     height: width,
   },
+  doneButton: {
+    backgroundColor: colors.white,
+    borderRadius: 70,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 18,
+    color: colors.primary,
+  },
 });
+
+export default OnboardingScreen;
