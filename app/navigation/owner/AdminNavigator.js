@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import DashboardNavigator from "./DashboardNavigator";
-import AccountScreen from "../screens/owners/AccountScreen";
+import AccountScreen from "../../screens/owners/AccountScreen";
 import AccountNavigator from "./AccountNavigator";
 
 const Tab = createBottomTabNavigator();

@@ -2,10 +2,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 import React from "react";
 
-import AccountScreen from "../screens/owners/AccountScreen";
-import MessagesScreen from "../screens/MessagesScreen";
-import ProfileScreen from "../screens/owners/ProfileScreen";
-import RiderStatusScreen from "../screens/owners/RiderStatusScreen";
+import AccountScreen from "../../screens/owners/AccountScreen";
+import MessagesScreen from "../../screens/MessagesScreen";
+import ProfileScreen from "../../screens/owners/ProfileScreen";
+import RiderStatusScreen from "../../screens/owners/RiderStatusScreen";
 
 const AccountNavigator = () => {
   return (

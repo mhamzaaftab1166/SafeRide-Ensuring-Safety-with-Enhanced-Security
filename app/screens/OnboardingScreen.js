@@ -1,14 +1,24 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import LottieView from "lottie-react-native";
 
 import Onboarding from "react-native-onboarding-swiper";
-import SafeScreen from "../components/SafeScreen";
 import colors from "../config/colors";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
-const OnboardingScreen = () => {
+const OnboardingScreen = ({ navigation }) => {
+  const handleDone = () => {
+    navigation.navigate("Role");
+  };
+
   const data = [
     {
       backgroundColor: colors.secondary,
@@ -71,20 +81,22 @@ const OnboardingScreen = () => {
     },
   ];
   return (
-    <SafeScreen style={styles.container}>
+    <View style={styles.container}>
       <Onboarding
         bottomBarHighlight={false}
-        // onDone={handleDone}
-        // onSkip={handleSkip}
+        onSkip={handleDone}
         containerStyles={{ paddingHorizontal: 15 }}
         pages={data}
         DoneButtonComponent={({ isLight, ...props }) => (
-          <View style={styles.doneButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Role")}
+            style={styles.doneButton}
+          >
             <Text style={styles.text}>Get Started</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
-    </SafeScreen>
+    </View>
   );
 };
 
@@ -92,7 +104,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.black,
-    paddingTop: 0,
   },
   lottie: {
     width: width * 0.9,
@@ -103,7 +114,8 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     paddingVertical: 10,
     paddingHorizontal: 30,
-    marginHorizontal: 5,
+    right: width * 0.3,
+    bottom: height * 0.02,
     justifyContent: "center",
     alignItems: "center",
   },

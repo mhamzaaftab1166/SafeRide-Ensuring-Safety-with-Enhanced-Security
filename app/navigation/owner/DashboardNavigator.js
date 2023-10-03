@@ -1,12 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import ClustersScreen from "../screens/owners/ClustersScreen";
-import Dashboard from "../screens/owners/Dashboard";
-import RiderScreen from "../screens/owners/RiderScreen";
-import RidersEditScreen from "../screens/owners/RidersEditScreen";
-import SuccessScreen from "../screens/owners/SuccessScreen";
-import RidesScreen from "../screens/owners/RidesScreen";
-import VehicleScreen from "../screens/owners/VehiclesScreen";
+import ClustersScreen from "../../screens/owners/ClustersScreen";
+import Dashboard from "../../screens/owners/Dashboard";
+import RiderScreen from "../../screens/owners/RiderScreen";
+import RidersEditScreen from "../../screens/owners/RidersEditScreen";
+import SuccessScreen from "../../screens/owners/SuccessScreen";
+import RidesScreen from "../../screens/owners/RidesScreen";
+import VehicleScreen from "../../screens/owners/VehiclesScreen";
 
 const Stack = createStackNavigator();
 
