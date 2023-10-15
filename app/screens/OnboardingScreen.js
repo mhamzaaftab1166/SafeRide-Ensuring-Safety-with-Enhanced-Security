@@ -1,6 +1,5 @@
 import {
   Dimensions,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -80,6 +79,7 @@ const OnboardingScreen = ({ navigation }) => {
         "Unlock the Power of Geo-Fencing and Discover Many Other Helpful Features",
     },
   ];
+
   return (
     <View style={styles.container}>
       <Onboarding
