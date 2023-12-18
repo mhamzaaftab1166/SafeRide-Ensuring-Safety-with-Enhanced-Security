@@ -25,11 +25,6 @@ function Dashboard({ navigation }) {
       <AppText style={styles.heading}>Owner Dashboard</AppText>
       <View style={styles.metricContainer}>
         <MetricButton
-          label="Clusters"
-          value="2"
-          onPress={() => navigation.navigate("Clusters")}
-        />
-        <MetricButton
           label="Riders"
           value="8"
           onPress={() => navigation.navigate("Riders")}
@@ -42,8 +37,8 @@ function Dashboard({ navigation }) {
       </View>
       <View style={styles.metricContainer}>
         <MetricButton
-          label="Success"
-          value="88%"
+          label="Assigned Rider"
+          value={"10"}
           onPress={() => navigation.navigate("Success")}
         />
         <MetricButton

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import AdminNavigator from "./app/navigation/owner/AdminNavigator";
@@ -11,11 +11,11 @@ import HomeScreen from "./app/screens/passenger/HomeScreen";
 
 function App(props) {
   return (
-    // <NavigationContainer theme={navigationTheme}>
-    //   <AuthNavigator />
-    // </NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
+      <AdminNavigator />
+    </NavigationContainer>
     // <RideRequestScreen />
-    <HomeScreen />
+    // <HomeScreen />
   );
 }
 const styles = StyleSheet.create({

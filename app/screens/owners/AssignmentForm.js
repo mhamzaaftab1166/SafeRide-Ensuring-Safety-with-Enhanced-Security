@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const HomeScreen = () => {
+const AssignmentForm = () => {
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text>AssignmentForm</Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default AssignmentForm;
 
 const styles = StyleSheet.create({});
