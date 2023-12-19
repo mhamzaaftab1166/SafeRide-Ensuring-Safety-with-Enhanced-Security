@@ -11,11 +11,11 @@ import HomeScreen from "./app/screens/passenger/HomeScreen";
 
 function App(props) {
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <AdminNavigator />
-    </NavigationContainer>
+    // <NavigationContainer theme={navigationTheme}>
+    //   <AdminNavigator />
+    // </NavigationContainer>
     // <RideRequestScreen />
-    // <HomeScreen />
+    <HomeScreen />
   );
 }
 const styles = StyleSheet.create({
