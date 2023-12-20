@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RideMate",
-    "slug": "RideMate",
+    "name": "SafeRide",
+    "slug": "SafeRide",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -13,12 +13,27 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.saferide",
+      "config": {
+        "googleMapsApiKey": "AIzaSyCFt2E-FGr2Xk7N9t_sgyuyxmAcfpF5-0U"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.saferide",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCFt2E-FGr2Xk7N9t_sgyuyxmAcfpF5-0U"
+        },
+        "permissions": [
+          "ACCESS_COARSE_LOCATION",
+          "ACCESS_FINE_LOCATION",
+          "FOREGROUND_SERVICE"
+        ]
       }
     },
     "web": {

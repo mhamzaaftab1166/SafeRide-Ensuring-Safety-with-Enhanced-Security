@@ -6,7 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
+  ScrollView,
 } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import SafeScreen from "../../components/SafeScreen";
 import AppText from "../../components/AppText";
@@ -14,83 +16,100 @@ import AppText from "../../components/AppText";
 const HomeScreen = ({ navigation }) => {
   return (
     <SafeScreen style={{ paddingTop: 0 }}>
-      <StatusBar backgroundColor={defaultStyles.colors.primary_dark} />
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => null}>
-            <MaterialIcons name="menu" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.contentContainer}>
-          <AppText style={styles.title}>SafeRide</AppText>
-          <AppText style={styles.subtitle}>
-            Ensuring Safety with Enhanced Security
-          </AppText>
-          <TouchableOpacity
-            style={styles.startRideButton}
-            onPress={() => navigation.navigate("RequestRide")}
-          >
-            <AppText style={styles.buttonText}>Start Ride</AppText>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.additionalContentContainer}>
-          <View style={styles.inputSection}>
-            <Text style={styles.inputLabel}>Where to ?</Text>
-            <View style={styles.inputContent}>
-              <MaterialCommunityIcons name="clock-time-four" size={26} />
-              <AppText style={styles.inputText}>Now?</AppText>
+      <ScrollView>
+        <StatusBar backgroundColor={defaultStyles.colors.primary_dark} />
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity onPress={() => null}>
+              <MaterialIcons name="menu" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentContainer}>
+            <AppText style={styles.title}>SafeRide</AppText>
+            <AppText style={styles.subtitle}>
+              Ensuring Safety with Enhanced Security
+            </AppText>
+            <TouchableOpacity
+              style={styles.startRideButton}
+              onPress={() => navigation.navigate("RequestRide")}
+            >
+              <AppText style={styles.buttonText}>Start Ride</AppText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.additionalContentContainer}>
+            <View style={styles.inputSection}>
+              <Text style={styles.inputLabel}>Where to ?</Text>
+              <View style={styles.inputContent}>
+                <MaterialCommunityIcons name="clock-time-four" size={26} />
+                <AppText style={styles.inputText}>Now?</AppText>
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <View
-        style={{
-          ...styles.infoContainer,
-          borderBottomWidth: 0.5,
-          borderRadius: 20,
-        }}
-      >
         <View
           style={{
-            borderRadius: 30,
-            backgroundColor: defaultStyles.colors.light,
-            padding: 8,
+            ...styles.infoContainer,
+            borderBottomWidth: 0.5,
+            borderRadius: 20,
           }}
         >
-          <MaterialCommunityIcons name="map-marker" size={22} />
+          <View
+            style={{
+              borderRadius: 30,
+              backgroundColor: defaultStyles.colors.light,
+              padding: 8,
+            }}
+          >
+            <MaterialCommunityIcons name="map-marker" size={22} />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainText}>32 Olivia Rd2</Text>
+            <Text style={styles.subText}>Any street no.</Text>
+          </View>
+          <MaterialCommunityIcons
+            type="material-community"
+            name="chevron-right"
+            size={26}
+          />
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.mainText}>32 Olivia Rd2</Text>
-          <Text style={styles.subText}>Any street no.</Text>
+        <View style={styles.infoContainer}>
+          <View
+            style={{
+              borderRadius: 30,
+              backgroundColor: defaultStyles.colors.light,
+              padding: 8,
+            }}
+          >
+            <MaterialCommunityIcons name="map-marker" size={22} />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainText}>32 Olivia Rd</Text>
+            <Text style={styles.subText}>Any street no.</Text>
+          </View>
+          <MaterialCommunityIcons
+            type="material-community"
+            name="chevron-right"
+            size={26}
+          />
         </View>
-        <MaterialCommunityIcons
-          type="material-community"
-          name="chevron-right"
-          size={26}
-        />
-      </View>
-      <View style={styles.infoContainer}>
+        <AppText style={styles.aroundYouText}>Around You</AppText>
         <View
           style={{
-            borderRadius: 30,
-            backgroundColor: defaultStyles.colors.light,
-            padding: 8,
+            marginTop: 10,
+            height: 300,
+            width: "90%",
+            alignSelf: "center",
+            overflow: "hidden",
+            borderRadius: 10,
           }}
         >
-          <MaterialCommunityIcons name="map-marker" size={22} />
+          <MapView
+            style={{ flex: 1, borderRadius: 20 }}
+            provider={PROVIDER_GOOGLE}
+          ></MapView>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.mainText}>32 Olivia Rd</Text>
-          <Text style={styles.subText}>Any street no.</Text>
-        </View>
-        <MaterialCommunityIcons
-          type="material-community"
-          name="chevron-right"
-          size={26}
-        />
-      </View>
-      <AppText style={styles.aroundYouText}>Around You</AppText>
+      </ScrollView>
     </SafeScreen>
   );
 };
