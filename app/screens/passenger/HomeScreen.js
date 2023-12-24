@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import defaultStyles from "../../config/styles";
 import {
   View,
@@ -12,8 +12,26 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import SafeScreen from "../../components/SafeScreen";
 import AppText from "../../components/AppText";
+import { mapStyle } from "../../config/mapStyle";
+import * as Location from "expo-location";
 
 const HomeScreen = ({ navigation }) => {
+  const mapRef = useRef(null);
+  const [latlng, setLatLng] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        alert("You need to give location permission for using live location!");
+        return;
+      }
+
+      const { coords } = await Location.getCurrentPositionAsync();
+      const { latitude, longitude } = coords;
+      setLatLng({ latitude, longitude });
+    })();
+  }, []);
   return (
     <SafeScreen style={{ paddingTop: 0 }}>
       <ScrollView>
@@ -97,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
         <View
           style={{
             marginTop: 10,
-            height: 300,
+            height: 400,
             width: "90%",
             alignSelf: "center",
             overflow: "hidden",
@@ -105,8 +123,12 @@ const HomeScreen = ({ navigation }) => {
           }}
         >
           <MapView
+            ref={mapRef}
             style={{ flex: 1, borderRadius: 20 }}
             provider={PROVIDER_GOOGLE}
+            customMapStyle={mapStyle}
+            showsUserLocation={true}
+            followsUserLocation={true}
           ></MapView>
         </View>
       </ScrollView>
@@ -188,7 +210,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 10,
-    flex: 1, // Take the remaining space
+    flex: 1,
   },
   mainText: {
     fontSize: 18,
