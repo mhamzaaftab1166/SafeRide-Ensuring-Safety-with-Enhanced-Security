@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  Image,
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import SafeScreen from "../../components/SafeScreen";
 import AppText from "../../components/AppText";
 import { mapStyle } from "../../config/mapStyle";
 import * as Location from "expo-location";
+import { carsAround } from "../../config/data";
 
 const HomeScreen = ({ navigation }) => {
   const mapRef = useRef(null);
@@ -129,7 +131,17 @@ const HomeScreen = ({ navigation }) => {
             customMapStyle={mapStyle}
             showsUserLocation={true}
             followsUserLocation={true}
-          ></MapView>
+          >
+            {carsAround.map((car, index) => (
+              <Marker key={index.toString()} coordinate={car}>
+                <Image
+                  source={require("../../assets/carMarker.png")}
+                  style={{ width: 28, height: 14 }}
+                  resizeMode="cover"
+                />
+              </Marker>
+            ))}
+          </MapView>
         </View>
       </ScrollView>
     </SafeScreen>
