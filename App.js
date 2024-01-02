@@ -1,13 +1,15 @@
+import "react-native-gesture-handler";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import AdminNavigator from "./app/navigation/owner/AdminNavigator";
 import DashboardNavigator from "./app/navigation/owner/DashboardNavigator";
-import navigationTheme from "./app/navigation/owner/navigationTheme";
+import navigationTheme from "./app/navigation/navigationTheme";
 import OnboardingScreen from "./app/screens/OnboardingScreen";
 import AuthNavigator from "./app/navigation/AuthNavigatior";
 import HomeScreen from "./app/screens/passenger/HomeScreen";
+import PassengerRootNavigator from "./app/navigation/passenger/PassengerRootNavigator";
 
 function App(props) {
   return (
@@ -15,7 +17,7 @@ function App(props) {
     //   <AdminNavigator />
     // </NavigationContainer>
     // <RideRequestScreen />
-    <HomeScreen />
+    <PassengerRootNavigator />
   );
 }
 const styles = StyleSheet.create({

@@ -14,7 +14,11 @@ const AccountNavigator = () => {
         headerTitleAlign: "center",
       }}
     >
-      <Stack.Screen name="Account" component={AccountScreen} />
+      <Stack.Screen
+        name="AccountNavigator"
+        component={AccountScreen}
+        options={{ title: "My Account" }}
+      />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Status" component={RiderStatusScreen} />
       <Stack.Screen

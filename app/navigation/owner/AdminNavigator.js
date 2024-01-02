@@ -9,10 +9,11 @@ const Tab = createBottomTabNavigator();
 const AdminNavigator = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{
+      screenOptions={{
         style: {
           bottom: 3,
         },
+        headerShown: false,
       }}
     >
       <Tab.Screen
@@ -25,7 +26,7 @@ const AdminNavigator = () => {
             />
           ),
         }}
-        name="Dashboard"
+        name="DashboardNavigator"
         component={DashboardNavigator}
       />
       <Tab.Screen
