@@ -20,7 +20,7 @@ export default function DrawerNavigator() {
               color={
                 focused
                   ? defaultStyles.colors.primary
-                  : defaultStyles.colors.white
+                  : defaultStyles.colors.dark
               }
               size={size}
             />

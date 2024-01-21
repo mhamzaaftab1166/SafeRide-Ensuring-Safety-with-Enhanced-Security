@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
             </AppText>
             <TouchableOpacity
               style={styles.startRideButton}
-              onPress={() => navigation.navigate("RequestRide")}
+              onPress={() => navigation.navigate("request")}
             >
               <AppText style={styles.buttonText}>Start Ride</AppText>
             </TouchableOpacity>
