@@ -13,11 +13,12 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const DestinationScreen = ({ navigation }) => {
   const textInputRef1 = useRef(4);
   const textInputRef2 = useRef(5);
+
   return (
     <>
       <View
         style={{
-          height: SCREEN_HEIGHT * 0.21,
+          height: "5%",
           alignItems: "center",
           zIndex: 5,
           backgroundColor: colors.white,
@@ -53,7 +54,7 @@ const DestinationScreen = ({ navigation }) => {
         ref={textInputRef1}
         minLength={2}
         enablePoweredByContainer={false}
-        fetchDetails={false}
+        fetchDetails={true}
         autoFocus={true}
         styles={autoComplete}
         query={{
@@ -61,6 +62,9 @@ const DestinationScreen = ({ navigation }) => {
           language: "en",
         }}
         onError={(error) => console.log("Autocomplete Error:", error)}
+        onPress={(data, details = null) => {
+          console.log("Place Details:", details.geometry);
+        }}
       />
     </>
   );
@@ -72,9 +76,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    // alignItems: "center",
     // justifyContent: "center",
-    paddingTop: 20,
+    // paddingTop: 20,
   },
   avatarContainer: {
     flexDirection: "row",
