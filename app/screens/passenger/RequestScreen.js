@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,13 +11,22 @@ import MapComponent from "../../components/MapComponent";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
 import { useNavigation } from "@react-navigation/native";
+import { OriginContext } from "../../contexts/contexts";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const RequestScreen = () => {
-  const navigation = useNavigation();
+  const { origin, dispatchOrigin } = useContext(OriginContext);
+  const [userOrigin, setUserOrigin] = useState({
+    latitude: origin.latitude,
+    longitude: origin.longitude,
+  });
 
+  const navigation = useNavigation();
+  useEffect(() => {
+    setUserOrigin({ latitude: origin.latitude, longitude: origin.longitude });
+  }, [origin]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -76,7 +85,7 @@ const RequestScreen = () => {
           </View>
         </View>
       </View>
-      <MapComponent />
+      <MapComponent userOrigin={userOrigin} />
     </View>
   );
 };

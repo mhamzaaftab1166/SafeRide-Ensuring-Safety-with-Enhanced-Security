@@ -1,16 +1,19 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import colors from "../../config/colors";
 import { TouchableOpacity } from "react-native";
 import { Avatar, Icon } from "react-native-elements";
 import AppText from "../../components/AppText";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
+import { OriginContext } from "../../contexts/contexts";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const DestinationScreen = ({ navigation }) => {
+  const { dispatchOrigin } = useContext(OriginContext);
+
   const textInputRef1 = useRef(4);
   const textInputRef2 = useRef(5);
 
@@ -63,7 +66,16 @@ const DestinationScreen = ({ navigation }) => {
         }}
         onError={(error) => console.log("Autocomplete Error:", error)}
         onPress={(data, details = null) => {
-          console.log("Place Details:", details.geometry);
+          dispatchOrigin({
+            type: "ADD_ORIGIN",
+            payload: {
+              latitude: details.geometry.location.lat,
+              longitude: details.geometry.location.lng,
+              address: details.formatted_address,
+              name: details.name,
+            },
+          });
+          navigation.goBack();
         }}
       />
     </>

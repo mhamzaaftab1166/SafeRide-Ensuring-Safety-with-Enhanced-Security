@@ -10,6 +10,7 @@ import OnboardingScreen from "./app/screens/OnboardingScreen";
 import AuthNavigator from "./app/navigation/AuthNavigatior";
 import HomeScreen from "./app/screens/passenger/HomeScreen";
 import PassengerRootNavigator from "./app/navigation/passenger/PassengerRootNavigator";
+import { OriginContextProvider } from "./app/contexts/contexts";
 
 function App(props) {
   return (
@@ -17,7 +18,9 @@ function App(props) {
     //   <AdminNavigator />
     // </NavigationContainer>
     // <RideRequestScreen />
-    <PassengerRootNavigator />
+    <OriginContextProvider>
+      <PassengerRootNavigator />
+    </OriginContextProvider>
   );
 }
 const styles = StyleSheet.create({
