@@ -32,10 +32,7 @@ const RequestScreen = () => {
             color={colors.medium}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.avatarContainer}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.avatarContainer}>
           <Avatar
             rounded
             avatarStyle={styles.avatar}
@@ -53,7 +50,7 @@ const RequestScreen = () => {
           </View>
           <View style={styles.fromWhereContent}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("DestinationScreen")}
+              onPress={() => navigation.navigate("destination")}
             >
               <View style={styles.fromWhereHeader}>
                 <AppText style={styles.fromWhereHeaderText}>
