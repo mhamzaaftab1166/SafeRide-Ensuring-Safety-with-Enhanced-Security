@@ -89,7 +89,7 @@ const DestinationScreen = ({ navigation }) => {
           placeholder="Going to.."
           listViewDisplayed="auto"
           debounce={400}
-          ref={textInputRef1}
+          ref={textInputRef2}
           minLength={2}
           enablePoweredByContainer={false}
           fetchDetails={true}
