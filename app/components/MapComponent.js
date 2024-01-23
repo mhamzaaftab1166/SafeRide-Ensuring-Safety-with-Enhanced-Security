@@ -26,6 +26,18 @@ export default class MapComponent extends Component {
               />
             </Marker>
           )}
+          {this.props.userDestination.latitude && (
+            <Marker
+              coordinate={this.props.userDestination}
+              anchor={{ x: 0.5, y: 0.5 }}
+            >
+              <Image
+                resizeMode="cover"
+                style={{ width: 16, height: 16 }}
+                source={require("../assets/location.png")}
+              />
+            </Marker>
+          )}
         </MapView>
       </View>
     );

@@ -11,22 +11,32 @@ import MapComponent from "../../components/MapComponent";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
 import { useNavigation } from "@react-navigation/native";
-import { OriginContext } from "../../contexts/contexts";
+import { DestinationContext, OriginContext } from "../../contexts/contexts";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const RequestScreen = () => {
   const { origin, dispatchOrigin } = useContext(OriginContext);
+  const { destination, dispatchDestination } = useContext(DestinationContext);
+
   const [userOrigin, setUserOrigin] = useState({
     latitude: origin.latitude,
     longitude: origin.longitude,
+  });
+  const [userDestination, setUserDestination] = useState({
+    latitude: destination.latitude,
+    longitude: destination.longitude,
   });
 
   const navigation = useNavigation();
   useEffect(() => {
     setUserOrigin({ latitude: origin.latitude, longitude: origin.longitude });
-  }, [origin]);
+    setUserDestination({
+      latitude: destination.latitude,
+      longitude: destination.longitude,
+    });
+  }, [origin, destination]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -85,7 +95,7 @@ const RequestScreen = () => {
           </View>
         </View>
       </View>
-      <MapComponent userOrigin={userOrigin} />
+      <MapComponent userOrigin={userOrigin} userDestination={userDestination} />
     </View>
   );
 };

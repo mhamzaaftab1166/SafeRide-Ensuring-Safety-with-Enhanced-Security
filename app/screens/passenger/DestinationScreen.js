@@ -1,18 +1,21 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import colors from "../../config/colors";
 import { TouchableOpacity } from "react-native";
 import { Avatar, Icon } from "react-native-elements";
 import AppText from "../../components/AppText";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
-import { OriginContext } from "../../contexts/contexts";
+import { DestinationContext, OriginContext } from "../../contexts/contexts";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const DestinationScreen = ({ navigation }) => {
+  const [destination, setDestination] = useState(false);
+
   const { dispatchOrigin } = useContext(OriginContext);
+  const { dispatchDestination } = useContext(DestinationContext);
 
   const textInputRef1 = useRef(4);
   const textInputRef2 = useRef(5);
@@ -48,36 +51,69 @@ const DestinationScreen = ({ navigation }) => {
           <AppText style={styles.usernameText}>M HAMZA AFTAB</AppText>
         </TouchableOpacity>
       </View>
-      <GooglePlacesAutocomplete
-        nearbyPlacesAPI="GooglePlacesSearch"
-        placeholder="Going to.."
-        listViewDisplayed="auto"
-        debounce={400}
-        // currentLocation={true}
-        ref={textInputRef1}
-        minLength={2}
-        enablePoweredByContainer={false}
-        fetchDetails={true}
-        autoFocus={true}
-        styles={autoComplete}
-        query={{
-          key: GOOGLE_MAPS_APIKEY,
-          language: "en",
-        }}
-        onError={(error) => console.log("Autocomplete Error:", error)}
-        onPress={(data, details = null) => {
-          dispatchOrigin({
-            type: "ADD_ORIGIN",
-            payload: {
-              latitude: details.geometry.location.lat,
-              longitude: details.geometry.location.lng,
-              address: details.formatted_address,
-              name: details.name,
-            },
-          });
-          navigation.goBack();
-        }}
-      />
+      {destination === false && (
+        <GooglePlacesAutocomplete
+          nearbyPlacesAPI="GooglePlacesSearch"
+          placeholder="Going from ?"
+          listViewDisplayed="auto"
+          debounce={400}
+          ref={textInputRef1}
+          minLength={2}
+          enablePoweredByContainer={false}
+          fetchDetails={true}
+          autoFocus={true}
+          styles={autoComplete}
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: "en",
+          }}
+          onError={(error) => console.log("Autocomplete Error:", error)}
+          onPress={(data, details = null) => {
+            dispatchOrigin({
+              type: "ADD_ORIGIN",
+              payload: {
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                address: details.formatted_address,
+                name: details.name,
+              },
+            });
+            setDestination(true);
+          }}
+        />
+      )}
+
+      {destination === true && (
+        <GooglePlacesAutocomplete
+          nearbyPlacesAPI="GooglePlacesSearch"
+          placeholder="Going to.."
+          listViewDisplayed="auto"
+          debounce={400}
+          ref={textInputRef1}
+          minLength={2}
+          enablePoweredByContainer={false}
+          fetchDetails={true}
+          autoFocus={true}
+          styles={autoComplete}
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: "en",
+          }}
+          onError={(error) => console.log("Autocomplete Error:", error)}
+          onPress={(data, details = null) => {
+            dispatchDestination({
+              type: "ADD_DESTINATION",
+              payload: {
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                address: details.formatted_address,
+                name: details.name,
+              },
+            });
+            navigation.goBack();
+          }}
+        />
+      )}
     </>
   );
 };
