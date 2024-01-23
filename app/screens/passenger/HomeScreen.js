@@ -34,13 +34,22 @@ const HomeScreen = ({ navigation }) => {
       setLatLng({ latitude, longitude });
     })();
   }, []);
+
+  const handleMenuPress = () => {
+    navigation.openDrawer();
+  };
+
   return (
     <SafeScreen style={{ paddingTop: 0 }}>
       <ScrollView>
         <StatusBar backgroundColor={defaultStyles.colors.primary_dark} />
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <TouchableOpacity onPress={() => null}>
+            <TouchableOpacity
+              onPress={() => {
+                handleMenuPress();
+              }}
+            >
               <MaterialIcons name="menu" size={24} color="white" />
             </TouchableOpacity>
           </View>

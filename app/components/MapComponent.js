@@ -17,10 +17,11 @@ export default class MapComponent extends Component {
     super(props);
     this.state = {};
     this._map = React.createRef();
+    this.intervalId = null; // Initialize intervalId
   }
 
   componentDidMount() {
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       if (this.props.userDestination.latitude !== null) {
         const iosEdgePadding = { top: 100, right: 50, bottom: 300, left: 50 };
         const androidEdgePadding = {
@@ -32,7 +33,7 @@ export default class MapComponent extends Component {
         const edgePadding =
           Platform.OS === "android" ? androidEdgePadding : iosEdgePadding;
 
-        this._map.current.fitToCoordinates(
+        this._map.current?.fitToCoordinates(
           [this.props.userOrigin, this.props.userDestination],
           {
             edgePadding: edgePadding,
@@ -41,6 +42,11 @@ export default class MapComponent extends Component {
         );
       }
     }, 500);
+  }
+
+  componentWillUnmount() {
+    // Clear the interval when the component is unmounted
+    clearInterval(this.intervalId);
   }
 
   render() {

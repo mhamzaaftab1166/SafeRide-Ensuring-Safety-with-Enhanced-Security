@@ -5,14 +5,14 @@ import colors from "../config/colors";
 import AppText from "./AppText";
 
 const RidesHistory = ({ item }) => {
-  const passengersText = item.passengers.join(", ");
+  const passengersText = item.passenger.join(", ");
 
   return (
     <View style={styles.rideItem}>
       <AppText style={styles.rideTitle}>Cluster: {item.cluster}</AppText>
       <AppText style={styles.text}>Ride id: {item.id}</AppText>
       <AppText style={styles.text}>Driver: {item.driver}</AppText>
-      <AppText style={styles.text}>Passengers: {passengersText}</AppText>
+      <AppText style={styles.text}>Passenger: {passengersText}</AppText>
       <AppText style={styles.text}>Time: {item.time}</AppText>
     </View>
   );
