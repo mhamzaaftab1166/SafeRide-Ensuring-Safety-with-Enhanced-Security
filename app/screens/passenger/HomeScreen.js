@@ -65,15 +65,6 @@ const HomeScreen = ({ navigation }) => {
               <AppText style={styles.buttonText}>Start Ride</AppText>
             </TouchableOpacity>
           </View>
-          <View style={styles.additionalContentContainer}>
-            <View style={styles.inputSection}>
-              <Text style={styles.inputLabel}>Where to ?</Text>
-              <View style={styles.inputContent}>
-                <MaterialCommunityIcons name="clock-time-four" size={26} />
-                <AppText style={styles.inputText}>Now?</AppText>
-              </View>
-            </View>
-          </View>
         </View>
 
         <View
@@ -130,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
             width: "90%",
             alignSelf: "center",
             overflow: "hidden",
-            borderRadius: 10,
+            // borderRadius: 10,
           }}
         >
           <MapView
