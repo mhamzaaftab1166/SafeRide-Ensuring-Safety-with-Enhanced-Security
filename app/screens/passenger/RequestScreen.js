@@ -80,7 +80,7 @@ const RequestScreen = () => {
             <View style={styles.dotsContainer}>
               <TouchableOpacity>
                 <View style={styles.dotsContent}>
-                  <AppText style={styles.dotsText}>---</AppText>
+                  <AppText style={styles.dotsText}>Destination</AppText>
                 </View>
               </TouchableOpacity>
               <View style={styles.plusIcon}>
@@ -148,9 +148,12 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
   },
   fromWhereHeaderText: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: colors.dark,
+    alignItems: "center",
+    flex: 5,
+    flexDirection: "row",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    fontSize: 17,
   },
   dotsContainer: {
     flexDirection: "row",
@@ -167,8 +170,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 5,
     flexDirection: "row",
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 15,
+    fontSize: 17,
   },
   plusIcon: {
     marginLeft: 10,

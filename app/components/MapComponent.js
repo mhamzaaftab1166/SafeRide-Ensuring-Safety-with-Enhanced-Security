@@ -11,6 +11,8 @@ import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { mapStyle } from "../config/mapStyle";
 import colors from "../config/colors";
+import MapViewDirection from "react-native-maps-directions";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 export default class MapComponent extends Component {
   constructor(props) {
@@ -82,6 +84,15 @@ export default class MapComponent extends Component {
                 source={require("../assets/location.png")}
               />
             </Marker>
+          )}
+          {this.props.userDestination.latitude !== null && (
+            <MapViewDirection
+              origin={this.props.userOrigin}
+              destination={this.props.userDestination}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth={4}
+              strokeColor={colors.black}
+            />
           )}
         </MapView>
       </View>
