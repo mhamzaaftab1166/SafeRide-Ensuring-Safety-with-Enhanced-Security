@@ -110,7 +110,7 @@ const DestinationScreen = ({ navigation }) => {
                 name: details.name,
               },
             });
-            navigation.goBack();
+            navigation.navigate("request", { state: 0 });
           }}
         />
       )}
