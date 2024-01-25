@@ -18,19 +18,28 @@ import { Avatar, Icon } from "react-native-elements";
 import MapComponent from "../../components/MapComponent";
 import colors from "../../config/colors";
 import AppText from "../../components/AppText";
-import { useNavigation } from "@react-navigation/native";
 import { DestinationContext, OriginContext } from "../../contexts/contexts";
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetSectionList,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { rideData, vehicleData } from "../../config/data";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getDistance } from "geolib";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const RequestScreen = ({ navigation, route }) => {
+  const vehiclePrices = {
+    Basic: 55, // PKR per kilometer
+    Intermediate: 70, // PKR per kilometer
+    Premium: 100, // PKR per kilometer
+    Bike: 30, // PKR per kilometer
+    Rickshaw: 45, // PKR per kilometer
+  };
+
+  const calculateFare = (distance, vehicleType) => {
+    return distance * vehiclePrices[vehicleType];
+  };
+
   const { origin, dispatchOrigin } = useContext(OriginContext);
   const { destination, dispatchDestination } = useContext(DestinationContext);
 
@@ -79,36 +88,60 @@ const RequestScreen = ({ navigation, route }) => {
     ),
     []
   );
-  const renderFlatListItems2 = useCallback(({ item }) => {
-    // Assuming item contains information about cars including category
-    const { title, subTitle, imageUrl, price } = item;
+  const renderFlatListItems2 = useCallback(
+    ({ item }) => {
+      // Assuming item contains information about cars including category
+      const { title, subTitle, imageUrl } = item;
 
-    return (
-      <View style={styles.view10}>
-        <Image source={imageUrl} style={styles.carImage} />
-        <View
-          style={{
-            marginRight: 15,
-            padding: 10,
-          }}
-        >
-          <Text style={styles.text9}>{title}</Text>
-          <Text style={styles.subTitleText}>{subTitle}</Text>
+      // Calculate distance between origin and destination
+      const distance = getDistance(
+        {
+          latitude: origin.latitude,
+          longitude: origin.longitude,
+        },
+        {
+          latitude: destination.latitude,
+          longitude: destination.longitude,
+        }
+      );
+
+      // Calculate fare based on distance and vehicle type
+      const price = calculateFare(distance / 1000, item.title);
+
+      // Add the calculated price to the item object
+      const updatedItem = {
+        ...item,
+        price: price.toFixed(1), // Optionally round the price to 2 decimal places
+      };
+
+      return (
+        <View style={styles.view10}>
+          <Image source={imageUrl} style={styles.carImage} />
+          <View
+            style={{
+              marginRight: 15,
+              padding: 10,
+            }}
+          >
+            <Text style={styles.text9}>{title}</Text>
+            <Text style={styles.subTitleText}>{subTitle}</Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>{price}</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={() => {
+              console.log("Selected Car Details:", updatedItem);
+            }}
+          >
+            <Text style={styles.confirmButtonText}>Confirm</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.priceContainer}>
-          <Text style={styles.priceText}>{price}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={() => {
-            console.log("Selected Car Details:", item);
-          }}
-        >
-          <Text style={styles.confirmButtonText}>Confirm</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }, []);
+      );
+    },
+    [origin, destination]
+  );
 
   return (
     <View style={styles.container}>

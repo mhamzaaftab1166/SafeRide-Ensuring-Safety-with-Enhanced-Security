@@ -21,31 +21,26 @@ export const vehicleData = [
     title: "Basic",
     subTitle: "Most basic car for ride",
     imageUrl: require("../assets/civic.jpg"),
-    price: 200,
   },
   {
     title: "Intermediate",
     subTitle: "Intermediate car for ride",
     imageUrl: require("../assets/civic.jpg"),
-    price: 200,
   },
   {
     title: "Premium",
     subTitle: "Premium car for ride",
     imageUrl: require("../assets/civic.jpg"),
-    price: 200,
   },
   {
     title: "Rickshaw",
     subTitle: "Rickshaw for ride",
     imageUrl: require("../assets/civic.jpg"),
-    price: 200,
   },
   {
     title: "Bike",
-    subTitle: "Nike for ride",
+    subTitle: "Bike for ride",
     imageUrl: require("../assets/civic.jpg"),
-    price: 200,
   },
 ];
 
