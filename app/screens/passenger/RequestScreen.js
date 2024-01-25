@@ -24,7 +24,7 @@ import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetSectionList,
 } from "@gorhom/bottom-sheet";
-import { rideData } from "../../config/data";
+import { rideData, vehicleData } from "../../config/data";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -44,7 +44,9 @@ const RequestScreen = ({ navigation, route }) => {
   });
 
   const bottomsheet1 = useRef(1);
+  const bottomsheet2 = useRef(2);
   const snapPoints1 = useMemo(() => ["5%", "60%"], []);
+  const snapPoints2 = useMemo(() => ["5%", "50%"], []);
   const handleSheetChange1 = useCallback((index) => {}, []);
 
   useEffect(() => {
@@ -77,6 +79,36 @@ const RequestScreen = ({ navigation, route }) => {
     ),
     []
   );
+  const renderFlatListItems2 = useCallback(({ item }) => {
+    // Assuming item contains information about cars including category
+    const { title, subTitle, imageUrl, price } = item;
+
+    return (
+      <View style={styles.view10}>
+        <Image source={imageUrl} style={styles.carImage} />
+        <View
+          style={{
+            marginRight: 15,
+            padding: 10,
+          }}
+        >
+          <Text style={styles.text9}>{title}</Text>
+          <Text style={styles.subTitleText}>{subTitle}</Text>
+        </View>
+        <View style={styles.priceContainer}>
+          <Text style={styles.priceText}>{price}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={() => {
+            console.log("Selected Car Details:", item);
+          }}
+        >
+          <Text style={styles.confirmButtonText}>Confirm</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -137,40 +169,91 @@ const RequestScreen = ({ navigation, route }) => {
         </View>
       </View>
       <MapComponent userOrigin={userOrigin} userDestination={userDestination} />
-      <BottomSheet
-        ref={bottomsheet1}
-        index={route.params.state}
-        snapPoints={snapPoints1}
-        onChange={handleSheetChange1}
-      >
-        <BottomSheetFlatList
-          keyboardShouldPersistTaps="always"
-          data={rideData}
-          keyExtractor={(item) => item.id}
-          renderItem={renderFlatListItems}
-          contentContainerStyle={styles.contentContainer}
-          ListHeaderComponent={
-            <View style={styles.view10}>
-              <View style={styles.view11}>
-                <MaterialCommunityIcons
-                  name="star"
-                  color={colors.white}
-                  size={20}
-                />
+      {destination.longitude === null && (
+        <BottomSheet
+          ref={bottomsheet1}
+          index={route.params.state}
+          snapPoints={snapPoints1}
+          onChange={handleSheetChange1}
+        >
+          <BottomSheetFlatList
+            keyboardShouldPersistTaps="always"
+            data={rideData}
+            keyExtractor={(item) => item.id}
+            renderItem={renderFlatListItems}
+            contentContainerStyle={styles.contentContainer}
+            ListHeaderComponent={
+              <View style={styles.view10}>
+                <View style={styles.view11}>
+                  <MaterialCommunityIcons
+                    name="star"
+                    color={colors.white}
+                    size={20}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.text9}>Past Places</Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.text9}>Past Places</Text>
-              </View>
-            </View>
-          }
-          ListFooterComponent={<View></View>}
-        />
-      </BottomSheet>
+            }
+          />
+        </BottomSheet>
+      )}
+      {destination.longitude !== null && (
+        <BottomSheet
+          ref={bottomsheet2}
+          index={route.params.state}
+          snapPoints={snapPoints2}
+          onChange={handleSheetChange1}
+        >
+          <BottomSheetFlatList
+            keyboardShouldPersistTaps="always"
+            data={vehicleData}
+            keyExtractor={(item) => item.title}
+            renderItem={renderFlatListItems2}
+            contentContainerStyle={styles.contentContainer}
+            ListHeaderComponent={<View style={styles.view10}></View>}
+          />
+        </BottomSheet>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  confirmButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+    alignItems: "center",
+  },
+  confirmButtonText: {
+    color: colors.white,
+    fontWeight: "bold",
+  },
+  priceContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+    marginRight: 10, // Align to the right
+  },
+  carImage: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  categoryText: {
+    fontSize: 15,
+    color: colors.medium,
+    marginRight: 5,
+  },
+  subTitleText: {
+    color: colors.medium,
+  },
+  priceText: {
+    color: colors.primary,
+    fontWeight: "bold",
+  },
   view10: {
     alignItems: "center",
     flex: 5,

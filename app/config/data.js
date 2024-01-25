@@ -16,6 +16,38 @@ export const rideData = [
   { street: "Total Boksburg", area: "35 Atlas Rd,Anderbolt,Boksburg", id: "3" },
   { street: "179 8th Ave", area: "Bezuidenhout Valley,Johannesburg", id: "4" },
 ];
+export const vehicleData = [
+  {
+    title: "Basic",
+    subTitle: "Most basic car for ride",
+    imageUrl: require("../assets/civic.jpg"),
+    price: 200,
+  },
+  {
+    title: "Intermediate",
+    subTitle: "Intermediate car for ride",
+    imageUrl: require("../assets/civic.jpg"),
+    price: 200,
+  },
+  {
+    title: "Premium",
+    subTitle: "Premium car for ride",
+    imageUrl: require("../assets/civic.jpg"),
+    price: 200,
+  },
+  {
+    title: "Rickshaw",
+    subTitle: "Rickshaw for ride",
+    imageUrl: require("../assets/civic.jpg"),
+    price: 200,
+  },
+  {
+    title: "Bike",
+    subTitle: "Nike for ride",
+    imageUrl: require("../assets/civic.jpg"),
+    price: 200,
+  },
+];
 
 // export const carTypeData = [
 //   {

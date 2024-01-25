@@ -110,7 +110,7 @@ const DestinationScreen = ({ navigation }) => {
                 name: details.name,
               },
             });
-            navigation.navigate("request", { state: 0 });
+            navigation.navigate("request", { state: 1 });
           }}
         />
       )}
