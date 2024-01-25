@@ -14,6 +14,7 @@ import colors from "../config/colors";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { getDistance } from "geolib";
 import AppText from "./AppText";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 export default class MapComponent extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,7 @@ export default class MapComponent extends Component {
     this._map = React.createRef();
     this.intervalId = null;
   }
+
   DistanceMarker = ({ distance }) => {
     return (
       <View style={styles.container}>
@@ -32,11 +34,12 @@ export default class MapComponent extends Component {
           size={24}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{`Distance: ${distance} km`}</Text>
+          <AppText>{`Distance: ${distance} km`}</AppText>
         </View>
       </View>
     );
   };
+
   componentDidMount() {
     this.intervalId = setInterval(() => {
       if (this.props.userDestination.latitude !== null) {
@@ -78,10 +81,10 @@ export default class MapComponent extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <StatusBar backgroundColor={colors.black} />
         <MapView
-          style={{ borderRadius: 20, height: "100%", width: "100%" }}
+          style={{ borderRadius: 20, flex: 1 }}
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           ref={this._map}
@@ -119,36 +122,10 @@ export default class MapComponent extends Component {
               strokeColor={colors.black}
             />
           )}
-          {this.state.distance !== null && (
-            <Marker
-              coordinate={{
-                latitude:
-                  (this.props.userOrigin.latitude +
-                    this.props.userDestination.latitude) /
-                  2,
-                longitude:
-                  (this.props.userOrigin.longitude +
-                    this.props.userDestination.longitude) /
-                  2,
-              }}
-              anchor={{ x: 0.5, y: 0.5 }}
-              title={`Distance: ${this.state.distance} meters`}
-            >
-              <View
-                style={{
-                  width: "100%",
-                  height: 40,
-                  backgroundColor: colors.white,
-                  borderRadius: 50,
-                }}
-              >
-                <AppText>{`Distance: ${
-                  this.state.distance / 1000
-                } km`}</AppText>
-              </View>
-            </Marker>
-          )}
         </MapView>
+        {this.state.distance !== null && (
+          <this.DistanceMarker distance={this.state.distance / 1000} />
+        )}
       </View>
     );
   }
@@ -172,8 +149,5 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 5,
-  },
-  text: {
-    color: colors.black,
   },
 });
