@@ -205,7 +205,7 @@ const RequestScreen = ({ navigation, route }) => {
       {destination.longitude === null && (
         <BottomSheet
           ref={bottomsheet1}
-          index={route.params.state}
+          index={route.params.state ? route.params.state : 0}
           snapPoints={snapPoints1}
           onChange={handleSheetChange1}
         >
@@ -235,7 +235,7 @@ const RequestScreen = ({ navigation, route }) => {
       {destination.longitude !== null && (
         <BottomSheet
           ref={bottomsheet2}
-          index={route.params.state}
+          index={route.params.state ? route.params.state : 1}
           snapPoints={snapPoints2}
           onChange={handleSheetChange1}
         >

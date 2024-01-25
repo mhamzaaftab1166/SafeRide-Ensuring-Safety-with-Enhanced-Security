@@ -25,7 +25,7 @@ export default function CustomDrawerContent(props) {
       <View style={styles.drawerItemContainer}>
         <DrawerItem
           label="Request Ride"
-          onPress={() => props.navigation.navigate("RequestRide")}
+          onPress={() => props.navigation.navigate("RequestRide", { state: 1 })}
         />
         <DrawerItem
           label="History"

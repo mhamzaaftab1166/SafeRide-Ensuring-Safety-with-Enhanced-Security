@@ -33,6 +33,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen
         name="RequestRide"
         component={RequestScreen}
+        initialParams={{ state: 0 }}
         options={{
           headerShown: false,
           title: "Request Ride",
