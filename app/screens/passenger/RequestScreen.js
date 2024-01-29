@@ -111,7 +111,7 @@ const RequestScreen = ({ navigation, route }) => {
       // Add the calculated price to the item object
       const updatedItem = {
         ...item,
-        price: price.toFixed(1), // Optionally round the price to 2 decimal places
+        price: Math.round(price), // Round the price to the nearest integer
       };
 
       return (
@@ -127,12 +127,13 @@ const RequestScreen = ({ navigation, route }) => {
             <Text style={styles.subTitleText}>{subTitle}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>{price}</Text>
+            <Text style={styles.priceText}>{updatedItem.price}</Text>
           </View>
           <TouchableOpacity
             style={styles.confirmButton}
             onPress={() => {
               console.log("Selected Car Details:", updatedItem);
+              navigation.navigate("ride", { item: updatedItem });
             }}
           >
             <Text style={styles.confirmButtonText}>Confirm</Text>

@@ -15,6 +15,7 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import { getDistance } from "geolib";
 import AppText from "./AppText";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialIcons } from "@expo/vector-icons";
 export default class MapComponent extends Component {
   constructor(props) {
     super(props);
@@ -88,6 +89,8 @@ export default class MapComponent extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           ref={this._map}
+          showsUserLocation={true}
+          followsUserLocation={true}
         >
           {this.props.userOrigin.latitude && (
             <Marker
@@ -121,6 +124,27 @@ export default class MapComponent extends Component {
               strokeWidth={4}
               strokeColor={colors.black}
             />
+          )}
+          {this.props.pickupLocation && (
+            <Marker
+              coordinate={this.props.pickupLocation}
+              anchor={{ x: 0.5, y: 0.5 }}
+              title="Pickup Location"
+            ></Marker>
+          )}
+          {this.props.driverLocation && (
+            <Marker
+              coordinate={this.props.driverLocation}
+              anchor={{ x: 0.5, y: 0.5 }}
+              title="Driver
+               Location"
+            >
+              <Image
+                resizeMode="cover"
+                style={{ width: 16, height: 16 }}
+                source={require("../assets/carMarker.png")}
+              ></Image>
+            </Marker>
           )}
         </MapView>
         {this.state.distance !== null && (
