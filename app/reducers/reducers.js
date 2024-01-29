@@ -6,6 +6,7 @@ export const OriginReducer = (state, action) => {
         longitude: action.payload.longitude,
         address: action.payload.address,
         name: action.payload.name,
+        heading: action.payload.heading,
       };
     default:
       return state;

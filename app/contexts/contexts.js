@@ -10,6 +10,7 @@ export const OriginContextProvider = (props) => {
     longitude: null,
     address: "",
     name: "",
+    heading: "",
   });
   return (
     <OriginContext.Provider value={{ origin, dispatchOrigin }}>

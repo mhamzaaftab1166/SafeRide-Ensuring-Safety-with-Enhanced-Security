@@ -89,8 +89,8 @@ export default class MapComponent extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           ref={this._map}
-          showsUserLocation={true}
-          followsUserLocation={true}
+          // showsUserLocation={true}
+          // followsUserLocation={true}
         >
           {this.props.userOrigin.latitude && (
             <Marker
@@ -134,14 +134,22 @@ export default class MapComponent extends Component {
           )}
           {this.props.driverLocation && (
             <Marker
+              style={{ zIndex: 100 }}
               coordinate={this.props.driverLocation}
               anchor={{ x: 0.5, y: 0.5 }}
-              title="Driver
-               Location"
+              title="Driver Location"
             >
               <Image
-                resizeMode="cover"
-                style={{ width: 16, height: 16 }}
+                resizeMode="center"
+                style={{
+                  width: 25,
+                  height: 25,
+
+                  zIndex: 10,
+                  transform: [
+                    { rotate: `${this.props.userOrigin.heading}deg` || 0 },
+                  ],
+                }}
                 source={require("../assets/carMarker.png")}
               ></Image>
             </Marker>

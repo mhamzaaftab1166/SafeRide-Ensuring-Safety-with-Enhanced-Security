@@ -13,6 +13,7 @@ const RideScreen = ({ navigation, route }) => {
   const [userOrigin, setUserOrigin] = useState({
     latitude: origin.latitude,
     longitude: origin.longitude,
+    heading: origin.heading, // Fix the property name here
   });
   const [userDestination, setUserDestination] = useState({
     latitude: destination.latitude,
@@ -38,6 +39,7 @@ const RideScreen = ({ navigation, route }) => {
               longitude: location.coords.longitude,
               address: "",
               name: "",
+              heading: location.coords.heading,
             },
           });
         } catch (error) {
@@ -49,10 +51,12 @@ const RideScreen = ({ navigation, route }) => {
 
     return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     setUserOrigin({
       latitude: origin.latitude,
       longitude: origin.longitude,
+      heading: origin.heading, // Fix the property name here
     });
   }, [origin]);
 
@@ -62,11 +66,7 @@ const RideScreen = ({ navigation, route }) => {
         <MapComponent
           userOrigin={userOrigin}
           userDestination={userDestination}
-          // pickupLocation={userOrigin}
-          // driverLocation={{
-          //   latitude: 31.460783566384293,
-          //   longitude: 73.13855325347546,
-          // }}
+          driverLocation={userOrigin}
         />
       </View>
       <View style={styles.driverContainer}>
