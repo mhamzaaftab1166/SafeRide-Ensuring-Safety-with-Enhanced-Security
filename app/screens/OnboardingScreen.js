@@ -20,19 +20,21 @@ const OnboardingScreen = ({ navigation }) => {
 
   const data = [
     {
-      backgroundColor: colors.secondary,
+      backgroundColor: colors.purple,
       image: (
         <View style={styles.lottie}>
           <LottieView
             autoPlay
             loop
-            source={require("../assets/animations/ridemate.json")}
+            source={require("../assets/animations/business.json")}
           />
         </View>
       ),
-      title: "Group Rides Made Easy",
-      subtitle: "Experience convenient and cost-effective group-ride",
+      title: "Unlock business success",
+      subtitle:
+        "Optimize your ride-hailing business with advanced analytics for efficiency",
     },
+
     {
       backgroundColor: colors.yellow,
       image: (
@@ -49,19 +51,18 @@ const OnboardingScreen = ({ navigation }) => {
         "Ensure the safety and convenience of your child's transportation",
     },
     {
-      backgroundColor: colors.purple,
+      backgroundColor: colors.secondary,
       image: (
         <View style={styles.lottie}>
           <LottieView
             autoPlay
             loop
-            source={require("../assets/animations/business.json")}
+            source={require("../assets/animations/ridemate.json")}
           />
         </View>
       ),
-      title: "Business with Clustering",
-      subtitle:
-        "Transforming Vehicle Clusters into Profitable Business Ventures",
+      title: "Ride with Ease",
+      subtitle: "Experience convenient and cost-effective rides",
     },
     {
       backgroundColor: colors.primary,
@@ -89,7 +90,7 @@ const OnboardingScreen = ({ navigation }) => {
         pages={data}
         DoneButtonComponent={({ isLight, ...props }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Role")}
+            onPress={() => navigation.navigate("welcome")}
             style={styles.doneButton}
           >
             <Text style={styles.text}>Get Started</Text>

@@ -3,7 +3,8 @@ const Stack = createStackNavigator();
 import React from "react";
 
 import OnboardingScreen from "../screens/OnboardingScreen";
-import RoleScreen from "../screens/RoleScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const AuthNavigator = () => {
   return (
@@ -13,7 +14,8 @@ const AuthNavigator = () => {
       }}
     >
       <Stack.Screen name="OnBoarding" component={OnboardingScreen} />
-      <Stack.Screen name="Role" component={RoleScreen} />
+      <Stack.Screen name="welcome" component={WelcomeScreen} />
+      <Stack.Screen name="login" component={LoginScreen} />
     </Stack.Navigator>
   );
 };

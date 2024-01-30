@@ -21,11 +21,14 @@ function App(props) {
     //   <AdminNavigator />
     // </NavigationContainer>
     // <RideRequestScreen />
-    <DestinationContextProvider>
-      <OriginContextProvider>
-        <PassengerRootNavigator />
-      </OriginContextProvider>
-    </DestinationContextProvider>
+    // <DestinationContextProvider>
+    //   <OriginContextProvider>
+    //     <PassengerRootNavigator />
+    //   </OriginContextProvider>
+    // </DestinationContextProvider>
+    <NavigationContainer theme={navigationTheme}>
+      <AuthNavigator />
+    </NavigationContainer>
   );
 }
 const styles = StyleSheet.create({
