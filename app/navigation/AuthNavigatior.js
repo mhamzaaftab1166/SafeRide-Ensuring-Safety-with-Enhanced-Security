@@ -5,6 +5,7 @@ import React from "react";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const AuthNavigator = () => {
   return (
@@ -16,6 +17,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="OnBoarding" component={OnboardingScreen} />
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };

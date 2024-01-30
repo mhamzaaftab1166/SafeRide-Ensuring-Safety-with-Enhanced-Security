@@ -15,7 +15,7 @@ const { width, height } = Dimensions.get("window");
 
 const OnboardingScreen = ({ navigation }) => {
   const handleDone = () => {
-    navigation.navigate("Role");
+    navigation.navigate("welcome");
   };
 
   const data = [

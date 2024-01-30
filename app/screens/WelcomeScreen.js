@@ -25,7 +25,7 @@ const WelcomeScreen = ({ navigation }) => {
             title={"Login"}
           ></AppButton>
           <AppButton
-            onPress={() => navigation.navigate("")}
+            onPress={() => navigation.navigate("register")}
             title={"Register"}
             color="secondary"
           ></AppButton>
