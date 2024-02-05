@@ -5,21 +5,28 @@ import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppForm from "../components/forms/AppForm";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
+import { login } from "../services/authService";
+import jwtDecode from "jwt-decode";
 
 const validationSchema = Yup.object({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 function LoginScreen(props) {
-  const [loginFailed, setLoginFailed] = useState();
-  // const { login } = useAuth();
+  const [error, setError] = useState();
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
-    // const result = await authApi.login(email, password);
-    // if (!result.ok) return setLoginFailed(true);
-    // setLoginFailed(false);
-    // login(result.data);
-    console.log(email, password);
+    try {
+      const { data } = await login(email, password);
+      const user = jwtDecode(data);
+      console.log(user);
+      setErrorVisible(false);
+    } catch (error) {
+      if (error.response && error.response.status === 400)
+        setError(error.response.data);
+      setErrorVisible(true);
+    }
   };
 
   return (
@@ -31,10 +38,7 @@ function LoginScreen(props) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <AppErrorMessage
-            error="Invalid email or password."
-            visible={loginFailed}
-          />
+          <AppErrorMessage error={error} visible={errorVisible} />
           <AppFormField
             name={"email"}
             autoCapitalize="none"

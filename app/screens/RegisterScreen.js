@@ -13,18 +13,27 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPicker from "../components/forms/AppFormPicker";
+import { register } from "../services/userService";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
+  name: Yup.string().min(5).max(50).required().label("Name"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  role: Yup.object().nullable().required().label("Role"),
+  password: Yup.string().required().min(8).label("Password"),
 });
 const Registercreen = () => {
   const [error, setError] = useState();
   const [errorVisible, setErrorVisible] = useState(false);
 
   const handleSubmit = async (userInfo) => {
-    console.log(userInfo);
+    try {
+      await register({ ...userInfo, role: userInfo.role.label });
+      setErrorVisible(false);
+    } catch (error) {
+      if (error.response && error.response.status === 400)
+        setError(error.response.data);
+      setErrorVisible(true);
+    }
   };
   return (
     <KeyboardAvoidingView
@@ -34,7 +43,7 @@ const Registercreen = () => {
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../assets/hamza.jpeg")} />
         <AppForm
-          initialValues={{ name: "", email: "", password: "" }}
+          initialValues={{ name: "", email: "", role: null, password: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -56,10 +65,10 @@ const Registercreen = () => {
           />
           <AppFormPicker
             items={[
-              { label: "Admin", value: 1 },
-              { label: "Passenger", value: 2 },
-              { label: "Rider", value: 3 },
-              { label: "Parent", value: 4 },
+              { label: "admin", value: 1 },
+              { label: "passenger", value: 2 },
+              { label: "rider", value: 3 },
+              { label: "parent", value: 4 },
             ]}
             name={"role"}
             placeholder={"Role"}
