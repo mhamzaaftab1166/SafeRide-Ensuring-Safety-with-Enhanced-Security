@@ -14,6 +14,7 @@ import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppFormPicker from "../components/forms/AppFormPicker";
 import { register } from "../services/userService";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(5).max(50).required().label("Name"),
@@ -24,22 +25,29 @@ const validationSchema = Yup.object().shape({
 const Registercreen = () => {
   const [error, setError] = useState();
   const [errorVisible, setErrorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (userInfo) => {
     try {
+      setIsLoading(true); // Start showing activity indicator
       await register({ ...userInfo, role: userInfo.role.label });
-      setErrorVisible(false);
+      setError(null);
+      setErrorVisible(false); // Clear any previous errors
     } catch (error) {
-      if (error.response && error.response.status === 400)
-        setError(error.response.data);
-      setErrorVisible(true);
+      if (error.response && error.response.status === 400) {
+        setError(error.response.data); // Set error message from API response
+      }
+    } finally {
+      setIsLoading(false); // Stop showing activity indicator
     }
   };
+
   return (
     <KeyboardAvoidingView
       behavior="position"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
     >
+      <ActivityIndicator visible={isLoading} />
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../assets/hamza.jpeg")} />
         <AppForm

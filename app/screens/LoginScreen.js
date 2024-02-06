@@ -8,6 +8,7 @@ import AppErrorMessage from "../components/forms/AppErrorMessage";
 import authService from "../services/authService";
 import jwtDecode from "jwt-decode";
 import { AuthContext } from "../contexts/contexts";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 const validationSchema = Yup.object({
   email: Yup.string().required().email().label("Email"),
@@ -18,9 +19,11 @@ function LoginScreen(props) {
 
   const [error, setError] = useState();
   const [errorVisible, setErrorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
     try {
+      setIsLoading(true);
       const { data } = await authService.login(email, password);
       const user = jwtDecode(data);
       authContext.setUser(user);
@@ -30,41 +33,46 @@ function LoginScreen(props) {
       if (error.response && error.response.status === 400)
         setError(error.response.data);
       setErrorVisible(true);
+    } finally {
+      setIsLoading(false); // Stop showing activity indicator
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require("../assets/hamza.jpeg")} />
-      <View style={{ marginTop: "00%" }}>
-        <AppForm
-          initialValues={{ email: "", password: "" }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessage error={error} visible={errorVisible} />
-          <AppFormField
-            name={"email"}
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon={"email"}
-            keyboardType="email-address"
-            placeholder="Email"
-            textContentType="emailAddress"
-          />
-          <AppFormField
-            name={"password"}
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon={"lock"}
-            placeholder="Password"
-            secureTextEntry
-            textContentType="password"
-          />
-          <SubmitButton title={"Login"} />
-        </AppForm>
+    <>
+      <ActivityIndicator visible={isLoading} />
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require("../assets/hamza.jpeg")} />
+        <View style={{ marginTop: "00%" }}>
+          <AppForm
+            initialValues={{ email: "", password: "" }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <AppErrorMessage error={error} visible={errorVisible} />
+            <AppFormField
+              name={"email"}
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon={"email"}
+              keyboardType="email-address"
+              placeholder="Email"
+              textContentType="emailAddress"
+            />
+            <AppFormField
+              name={"password"}
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon={"lock"}
+              placeholder="Password"
+              secureTextEntry
+              textContentType="password"
+            />
+            <SubmitButton title={"Login"} />
+          </AppForm>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
