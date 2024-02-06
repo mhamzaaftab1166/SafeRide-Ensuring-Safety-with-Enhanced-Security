@@ -5,7 +5,7 @@ import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import AppForm from "../components/forms/AppForm";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
-import { login } from "../services/authService";
+import authService from "../services/authService";
 import jwtDecode from "jwt-decode";
 import { AuthContext } from "../contexts/contexts";
 
@@ -21,9 +21,10 @@ function LoginScreen(props) {
 
   const handleSubmit = async ({ email, password }) => {
     try {
-      const { data } = await login(email, password);
+      const { data } = await authService.login(email, password);
       const user = jwtDecode(data);
       authContext.setUser(user);
+      authService.storeToken(data);
       setErrorVisible(false);
     } catch (error) {
       if (error.response && error.response.status === 400)

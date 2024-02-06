@@ -1,8 +1,8 @@
 import "react-native-gesture-handler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-
+import authService from "./app/services/authService";
 import AdminNavigator from "./app/navigation/owner/AdminNavigator";
 import DashboardNavigator from "./app/navigation/owner/DashboardNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
@@ -10,6 +10,8 @@ import OnboardingScreen from "./app/screens/OnboardingScreen";
 import AuthNavigator from "./app/navigation/AuthNavigatior";
 import HomeScreen from "./app/screens/passenger/HomeScreen";
 import PassengerRootNavigator from "./app/navigation/passenger/PassengerRootNavigator";
+import jwtDecode from "jwt-decode";
+
 import {
   OriginContextProvider,
   DestinationContextProvider,
@@ -19,6 +21,14 @@ import {
 function App(props) {
   const [user, setUser] = useState();
 
+  const restoreToken = async () => {
+    const token = await authService.getToken();
+    if (!token) return;
+    setUser(jwtDecode(token));
+  };
+  useEffect(() => {
+    restoreToken();
+  }, []);
   return (
     // <NavigationContainer theme={navigationTheme}>
     //   <AdminNavigator />

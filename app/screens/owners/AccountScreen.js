@@ -7,6 +7,7 @@ import ListItem from "../../components/ListItem";
 import Icon from "../../components/Icon";
 import ListItemSeprator from "../../components/ListItemSeprator";
 import { AuthContext } from "../../contexts/contexts";
+import authService from "../../services/authService";
 
 const menuItems = [
   {
@@ -28,7 +29,7 @@ const menuItems = [
 ];
 
 function AccountScreen({ navigation }) {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   return (
     <GestureHandlerRootView>
       <View style={styles.screen}>
@@ -60,7 +61,10 @@ function AccountScreen({ navigation }) {
           ></FlatList>
         </View>
         <ListItem
-          // onPress={}
+          onPress={() => {
+            setUser(null);
+            authService.removeToken();
+          }}
           title={"Log Out"}
           IconComponent={
             <Icon name="logout" backgroundColor={colors.warning}></Icon>
