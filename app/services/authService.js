@@ -1,6 +1,7 @@
 import httpService from "./httpService";
 import config from "../config.json";
 import * as SecureStore from "expo-secure-store";
+import jwtDecode from "jwt-decode";
 
 const apiEnd = config.apiUrl + "/auth";
 const key = "authToken";
@@ -25,11 +26,11 @@ const getToken = async () => {
   }
 };
 
-// const getUser = async () => {
-//   const token = await getToken();
-//   if (token) return jwtDecode(token);
-//   return null;
-// };
+const getUser = async () => {
+  const token = await getToken();
+  if (token) return jwtDecode(token);
+  return null;
+};
 
 const removeToken = async () => {
   try {
@@ -43,6 +44,6 @@ export default {
   login,
   removeToken,
   storeToken,
-  // getUser,
-  getToken,
+  getUser,
+  // getToken,
 };

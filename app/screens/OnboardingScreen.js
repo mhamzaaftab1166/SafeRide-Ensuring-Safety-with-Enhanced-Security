@@ -10,12 +10,14 @@ import LottieView from "lottie-react-native";
 
 import Onboarding from "react-native-onboarding-swiper";
 import colors from "../config/colors";
+import { setItem } from "../services/asyncStorage";
 
 const { width, height } = Dimensions.get("window");
 
 const OnboardingScreen = ({ navigation }) => {
   const handleDone = () => {
     navigation.navigate("welcome");
+    setItem("onboarded", "1");
   };
 
   const data = [
@@ -90,7 +92,10 @@ const OnboardingScreen = ({ navigation }) => {
         pages={data}
         DoneButtonComponent={({ isLight, ...props }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("welcome")}
+            onPress={() => {
+              navigation.navigate("welcome");
+              setItem("onboarded", "1");
+            }}
             style={styles.doneButton}
           >
             <Text style={styles.text}>Get Started</Text>

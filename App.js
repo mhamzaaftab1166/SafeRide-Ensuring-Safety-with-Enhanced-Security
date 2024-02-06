@@ -1,16 +1,14 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import authService from "./app/services/authService";
 import AdminNavigator from "./app/navigation/owner/AdminNavigator";
 import DashboardNavigator from "./app/navigation/owner/DashboardNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
-import OnboardingScreen from "./app/screens/OnboardingScreen";
 import AuthNavigator from "./app/navigation/AuthNavigatior";
-import HomeScreen from "./app/screens/passenger/HomeScreen";
 import PassengerRootNavigator from "./app/navigation/passenger/PassengerRootNavigator";
-import jwtDecode from "jwt-decode";
+import * as SplashScreen from "expo-splash-screen";
 
 import {
   OriginContextProvider,
@@ -20,15 +18,33 @@ import {
 
 function App(props) {
   const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState(false);
 
-  const restoreToken = async () => {
-    const token = await authService.getToken();
-    if (!token) return;
-    setUser(jwtDecode(token));
+  const restoreUser = async () => {
+    const user = await authService.getUser();
+    if (user) setUser(user);
   };
   useEffect(() => {
-    restoreToken();
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await restoreUser();
+      } catch (error) {
+        console.log("Error loading app", error);
+      } finally {
+        setIsReady(true);
+      }
+    }
+
+    prepare();
   }, []);
+
+  const onNavigationContainerReady = useCallback(async () => {
+    if (isReady) await SplashScreen.hideAsync();
+  }, [isReady]);
+
+  if (!isReady) return null;
+
   return (
     // <NavigationContainer theme={navigationTheme}>
     //   <AdminNavigator />
@@ -43,7 +59,10 @@ function App(props) {
     <DestinationContextProvider>
       <OriginContextProvider>
         <AuthContext.Provider value={{ user, setUser }}>
-          <NavigationContainer theme={navigationTheme}>
+          <NavigationContainer
+            onReady={onNavigationContainerReady}
+            theme={navigationTheme}
+          >
             {user && user.role === "admin" ? (
               <AdminNavigator />
             ) : (
