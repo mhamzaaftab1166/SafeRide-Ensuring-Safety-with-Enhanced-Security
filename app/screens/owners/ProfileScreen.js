@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import UserProfileScreen from "../../components/UserProfileScreen";
+import { AuthContext } from "../../contexts/contexts";
 
 const ProfileScreen = () => {
-  const user = {
-    name: "Muhammad Hamza Aftab",
-    email: "mhamzaaftab1166@gmail.com",
-    role: "Admin",
+  const { user } = useContext(AuthContext);
+
+  const userData = {
+    name: user.name,
+    email: user.email,
+    role: user.role,
     joinDate: "Joined Jan 2022",
   };
 
-  return <UserProfileScreen user={user} />;
+  return <UserProfileScreen user={userData} />;
 };
 
 export default ProfileScreen;

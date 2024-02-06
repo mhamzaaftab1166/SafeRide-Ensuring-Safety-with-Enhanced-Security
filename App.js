@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -13,9 +13,12 @@ import PassengerRootNavigator from "./app/navigation/passenger/PassengerRootNavi
 import {
   OriginContextProvider,
   DestinationContextProvider,
+  AuthContext,
 } from "./app/contexts/contexts";
 
 function App(props) {
+  const [user, setUser] = useState();
+
   return (
     // <NavigationContainer theme={navigationTheme}>
     //   <AdminNavigator />
@@ -26,9 +29,20 @@ function App(props) {
     //     <PassengerRootNavigator />
     //   </OriginContextProvider>
     // </DestinationContextProvider>
-    <NavigationContainer theme={navigationTheme}>
-      <AuthNavigator />
-    </NavigationContainer>
+
+    <DestinationContextProvider>
+      <OriginContextProvider>
+        <AuthContext.Provider value={{ user, setUser }}>
+          <NavigationContainer theme={navigationTheme}>
+            {user && user.role === "admin" ? (
+              <AdminNavigator />
+            ) : (
+              <AuthNavigator />
+            )}
+          </NavigationContainer>
+        </AuthContext.Provider>
+      </OriginContextProvider>
+    </DestinationContextProvider>
   );
 }
 const styles = StyleSheet.create({
