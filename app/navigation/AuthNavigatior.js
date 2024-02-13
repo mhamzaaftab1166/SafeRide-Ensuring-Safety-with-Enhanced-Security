@@ -7,6 +7,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { getItem } from "../services/asyncStorage";
+import VerificationScreen from "../screens/VerificationScreen";
 
 const AuthNavigator = () => {
   const [showOnboarding, setShowOnboarding] = useState(null);
@@ -50,6 +51,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen name="register" component={RegisterScreen} />
+      <Stack.Screen name="verification" component={VerificationScreen} />
     </Stack.Navigator>
   );
 };

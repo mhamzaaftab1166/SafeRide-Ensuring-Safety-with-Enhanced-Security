@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   role: Yup.object().nullable().required().label("Role"),
   password: Yup.string().required().min(8).label("Password"),
 });
-const Registercreen = () => {
+const Registercreen = ({ navigation }) => {
   const [error, setError] = useState();
   const [errorVisible, setErrorVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,9 +30,15 @@ const Registercreen = () => {
   const handleSubmit = async (userInfo) => {
     try {
       setIsLoading(true); // Start showing activity indicator
-      await register({ ...userInfo, role: userInfo.role.label });
-      setError(null);
-      setErrorVisible(false); // Clear any previous errors
+      const { data } = await register({
+        ...userInfo,
+        role: userInfo.role.label,
+      });
+      if (data.success) {
+        setError(null);
+        setErrorVisible(false); // Clear any previous errors
+        navigation.navigate("verification");
+      }
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(error.response.data); // Set error message from API response

@@ -11,3 +11,9 @@ export function register(user) {
     role: user.role,
   });
 }
+export function verification(code) {
+  return httpService.post(`${apiEnd}/code`, { code });
+}
+export function resend() {
+  return httpService.get(`${apiEnd}/resend`);
+}
