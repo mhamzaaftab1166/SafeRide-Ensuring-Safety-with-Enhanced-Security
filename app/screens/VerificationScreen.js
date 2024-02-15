@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import {
   View,
   TextInput,
@@ -13,26 +13,29 @@ import { verification, resend } from "../services/userService";
 import { AuthContext } from "../contexts/contexts";
 import jwtDecode from "jwt-decode";
 import authService from "../services/authService";
+import colors from "../config/colors";
+import AppErrorMessage from "../components/forms/AppErrorMessage";
+import ActivityIndicator from "../components/ActivityIndicator";
 
-const EmailVerificationInput = () => {
-  const [verificationCode, setVerificationCode] = useState("");
-  const [isCodeSent, setIsCodeSent] = useState(false);
+const EmailVerificationInput = ({ route }) => {
+  const [error, setError] = useState();
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [verificationCode, setVerificationCode] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
   const authContext = useContext(AuthContext);
-
-  const handleSendCode = async () => {
-    try {
-      await resend();
-    } catch (error) {}
-    // Simulate sending verification code to the email
-    // You can replace this with your actual API call to send verification code
-    console.log("Sending verification code...");
-    setIsCodeSent(true);
-  };
+  const inputRefs = useRef([]);
 
   const handleVerifyCode = async () => {
-    const code = verificationCode.join(""); // Join the array elements
-    console.log("Verifying code:", code);
+    setIsLoading(true);
+    const code = verificationCode.join("");
 
     try {
       const response = await verification(code);
@@ -41,17 +44,34 @@ const EmailVerificationInput = () => {
       authContext.setUser(user);
       authService.storeToken(data);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 400) {
+        setError(error.response.data);
+        setErrorVisible(true);
+      }
+    } finally {
+      setIsLoading(false); // Stop showing activity indicator
     }
   };
 
   const handleResendCode = async () => {
-    // Resend verification code to the email
-    // You can replace this with your actual API call to resend verification code
     try {
-      await resend();
-    } catch (error) {}
-    setIsCodeSent(true);
+      await resend(route.params.email);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setError(null);
+      setErrorVisible(false);
+      alert("Email Verification code resent!");
+    }
+  };
+
+  const handleInputChange = (index, text) => {
+    const newCode = [...verificationCode];
+    newCode[index] = text;
+    setVerificationCode(newCode);
+    if (text !== "" && index < verificationCode.length - 1) {
+      inputRefs.current[index + 1].focus();
+    }
   };
 
   return (
@@ -59,31 +79,45 @@ const EmailVerificationInput = () => {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <View style={styles.inputContainer}>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <TextInput
-            key={index}
-            style={styles.input}
-            placeholder="-"
-            value={verificationCode[index] || ""}
-            onChangeText={(text) => {
-              const newCode = [...verificationCode];
-              newCode[index] = text;
-              setVerificationCode(newCode);
-            }}
-            keyboardType="numeric"
-            maxLength={1}
-          />
-        ))}
+      <ActivityIndicator visible={isLoading} />
+      <View style={styles.headerContainer}>
+        <View style={[styles.box, { backgroundColor: colors.primary }]}>
+          <Text style={styles.emailText}>
+            Verification code sent to: {route.params.email}
+          </Text>
+        </View>
       </View>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          style={styles.resendButton}
-          onPress={handleResendCode}
-        >
-          <Text style={styles.resendText}>Resend Code</Text>
-        </TouchableOpacity>
-        <Button title="Verify Code" onPress={handleVerifyCode} />
+
+      <View style={styles.contentContainer}>
+        <AppErrorMessage error={error} visible={errorVisible} />
+        <View style={styles.inputContainer}>
+          {verificationCode.map((value, index) => (
+            <TextInput
+              key={index}
+              ref={(ref) => (inputRefs.current[index] = ref)}
+              style={styles.input}
+              placeholder="-"
+              value={value}
+              onChangeText={(text) => handleInputChange(index, text)}
+              keyboardType="numeric"
+              maxLength={1}
+            />
+          ))}
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Button
+            title="Verify Code"
+            onPress={handleVerifyCode}
+            style={styles.verifyButton}
+            color={colors.primary}
+          />
+          <TouchableOpacity
+            style={[styles.resendButton, { marginLeft: 10 }]}
+            onPress={handleResendCode}
+          >
+            <Text style={styles.resendText}>Resend Code</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -95,12 +129,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
+    paddingTop: 50,
+  },
+  headerContainer: {
+    marginBottom: 20,
+    width: "100%",
+  },
+  box: {
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  emailText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 16,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
+    marginTop: 8,
   },
   input: {
     borderWidth: 1,
@@ -116,11 +172,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  resendButton: {
-    marginRight: 10,
+  verifyButton: {
+    flex: 1,
   },
+  resendButton: {},
   resendText: {
-    color: "blue",
+    color: colors.medium,
     textDecorationLine: "underline",
   },
 });

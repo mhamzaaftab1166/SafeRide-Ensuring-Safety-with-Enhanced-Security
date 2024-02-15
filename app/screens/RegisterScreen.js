@@ -37,11 +37,12 @@ const Registercreen = ({ navigation }) => {
       if (data.success) {
         setError(null);
         setErrorVisible(false); // Clear any previous errors
-        navigation.navigate("verification");
+        navigation.navigate("verification", { email: userInfo.email });
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setError(error.response.data); // Set error message from API response
+        setError(error.response.data);
+        setErrorVisible(true);
       }
     } finally {
       setIsLoading(false); // Stop showing activity indicator

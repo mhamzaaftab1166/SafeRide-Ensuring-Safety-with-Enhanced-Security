@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as Yup from "yup";
 import AppFormField from "../components/forms/AppFormField";
 import SubmitButton from "../components/forms/SubmitButton";
@@ -9,12 +9,15 @@ import authService from "../services/authService";
 import jwtDecode from "jwt-decode";
 import { AuthContext } from "../contexts/contexts";
 import ActivityIndicator from "../components/ActivityIndicator";
+import { TouchableOpacity } from "react-native";
+import colors from "../config/colors";
 
 const validationSchema = Yup.object({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
-function LoginScreen(props) {
+
+function LoginScreen({ navigation }) {
   const authContext = useContext(AuthContext);
 
   const [error, setError] = useState();
@@ -70,11 +73,15 @@ function LoginScreen(props) {
             />
             <SubmitButton title={"Login"} />
           </AppForm>
+          <TouchableOpacity onPress={() => navigation.navigate("forgot")}>
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     padding: 10,
@@ -86,5 +93,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: "center",
   },
+  forgotPasswordText: {
+    color: colors.medium,
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 10,
+    textDecorationLine: "underline",
+  },
 });
+
 export default LoginScreen;

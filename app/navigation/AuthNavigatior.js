@@ -8,6 +8,8 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { getItem } from "../services/asyncStorage";
 import VerificationScreen from "../screens/VerificationScreen";
+import ForgotScreen from "../screens/ForgotScreen";
+import ResetPassword from "../screens/ResetPassword";
 
 const AuthNavigator = () => {
   const [showOnboarding, setShowOnboarding] = useState(null);
@@ -52,6 +54,8 @@ const AuthNavigator = () => {
       <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen name="verification" component={VerificationScreen} />
+      <Stack.Screen name="forgot" component={ForgotScreen} />
+      <Stack.Screen name="reset" component={ResetPassword} />
     </Stack.Navigator>
   );
 };
