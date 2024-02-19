@@ -4,10 +4,12 @@ import AppText from "./AppText";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+
 function ListItem({
   title,
   subTitle,
   image,
+  phoneNumber, // Ensure the component accepts a phoneNumber prop
   IconComponent,
   onPress,
   renderRightActions,
@@ -27,6 +29,11 @@ function ListItem({
                 {subTitle}
               </AppText>
             )}
+            {phoneNumber && ( // Display phone number if it exists
+              <AppText numberOfLines={1} style={styles.phoneNumber}>
+                {phoneNumber}
+              </AppText>
+            )}
           </View>
           <MaterialCommunityIcons
             name="chevron-right"
@@ -38,6 +45,7 @@ function ListItem({
     </Swipeable>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -57,5 +65,11 @@ const styles = StyleSheet.create({
   subTitle: {
     color: colors.medium,
   },
+  phoneNumber: {
+    // Style for the phone number
+    color: colors.medium,
+    fontSize: 14,
+  },
 });
+
 export default ListItem;

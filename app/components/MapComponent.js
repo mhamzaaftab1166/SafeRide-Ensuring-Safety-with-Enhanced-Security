@@ -146,9 +146,9 @@ export default class MapComponent extends Component {
                   height: 25,
 
                   zIndex: 10,
-                  transform: [
-                    { rotate: `${this.props.userOrigin.heading}deg` || 0 },
-                  ],
+                  // transform: [
+                  //   { rotate: `${this.props.userOrigin.heading}deg` || 0 },
+                  // ],
                 }}
                 source={require("../assets/carMarker.png")}
               ></Image>

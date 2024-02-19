@@ -1,6 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { FlatList } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
 import ListItem from "../../components/ListItem";
 import ListItemSeprator from "../../components/ListItemSeprator";
@@ -9,64 +14,26 @@ import AddButton from "../../components/AddButton";
 import colors from "../../config/colors";
 
 const ridersData = [
-  {
-    id: 1,
-    name: "Ali Ahmad",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 2,
-    name: "Hamza aftab",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 3,
-    name: "Babar",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 4,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 5,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 6,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 7,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 8,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
-  {
-    id: 9,
-    name: "Asadullah",
-    email: "abc@gmail.com",
-    profilePic: require("../../assets/hamza.jpeg"),
-  },
+  // ... (other riders)
   {
     id: 10,
     name: "Asadullah",
     email: "abc@gmail.com",
+    phoneNumber: "123-456-7890", // Add phone number
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 12,
+    name: "Asadullah",
+    email: "mhamzaaftab@gmail.com",
+    phoneNumber: "123-456-7890", // Add phone number
+    profilePic: require("../../assets/hamza.jpeg"),
+  },
+  {
+    id: 18,
+    name: "Asadullah",
+    email: "mhamzaaftab@gmail.com",
+    phoneNumber: "123-456-7890", // Add phone number
     profilePic: require("../../assets/hamza.jpeg"),
   },
 ];
@@ -78,42 +45,55 @@ const RiderScreen = ({ navigation }) => {
   const handleDelete = (rider) => {
     setRiders(riders.filter((r) => r.id !== rider.id));
   };
-
+  if (!riders)
+    return (
+      <View>
+        <Text style={{ textAlign: "center" }}>Sorry! No data available.</Text>
+      </View>
+    );
   return (
-    <>
+    <View style={styles.container}>
       <FlatList
         data={riders}
         keyExtractor={(rider) => rider.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.container}>
+          <View style={styles.listItemContainer}>
             <ListItem
               title={item.name}
               subTitle={item.email}
-              image={item.profilePic}
+              phoneNumber={item.phoneNumber} // Pass phone number to ListItem
               onPress={() => navigation.navigate("RiderEdit", item)}
               renderRightActions={() => (
                 <ListItemDeleteAction onPress={() => handleDelete(item)} />
               )}
-            ></ListItem>
+            />
           </View>
         )}
         refreshing={refreshing}
-        onRefresh={() =>
-          setRiders([
-            {
-              id: 3,
-              name: "Babar",
-              email: "abc@gmail.com",
-              profilePic: require("../../assets/hamza.jpeg"),
-            },
-          ])
-        }
+        onRefresh={() => {
+          setRefreshing(true);
+          // Simulate a network request
+          setTimeout(() => {
+            setRiders([
+              {
+                id: 3,
+                name: "Babar",
+                email: "abc@gmail.com",
+                phoneNumber: "123-456-7890",
+                profilePic: require("../../assets/hamza.jpeg"),
+              },
+            ]);
+            setRefreshing(false);
+          }, 1000);
+        }}
         ItemSeparatorComponent={ListItemSeprator}
       />
       <AddButton
-        onPress={() => navigation.navigate("RiderEdit", { id: "new" })}
+        onPress={() =>
+          navigation.navigate("RiderEdit", { id: "new", phoneNumber: "" })
+        } // Pass empty phone number
       />
-    </>
+    </View>
   );
 };
 
@@ -121,6 +101,18 @@ export default RiderScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: colors.light,
+  },
+  listItemContainer: {
+    backgroundColor: "#fff",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
